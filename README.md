@@ -53,7 +53,7 @@ enchere-dz/
 └── README.md
 ```
 
-## ⚙️ Installation
+## Installation
 
 ### 1. Clone the repository
 
