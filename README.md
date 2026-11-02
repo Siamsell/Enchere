@@ -1,4 +1,4 @@
-# Enchère DZ 🇩🇿
+# Enchère Dz
 
 ### Bilingual Online Auction Platform
 
