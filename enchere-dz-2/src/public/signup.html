@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - إعلانات دزاير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style/style.css">
+
+    <style>
+
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.social-links a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+.contact-info {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.contact-info i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+        
+        :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #2c3e2c;
+            --light-color: #f5f7f5;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+        }
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        .logos {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            background-color: white;
+            width: 80%;
+        }
+        .logos img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        .logos-text {
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: 20px;
+        }
+        .logos-text .main {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .logos-text .sub {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .auth-btn {
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .login-btn {
+            background: none;
+            color: var(--primary-color);
+        }
+        .register-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        .register-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease-out;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.open { right: 0; }
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        .close-menu {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        .close-menu:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+        .menu-section { margin-bottom: 20px; }
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        .menu-item:hover {
+            background-color: #f5f7f5;
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        .menu-item.active i { color: var(--white); }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- Signup‑Page Specific Styles ---------- */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+        .auth-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .auth-form h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: rgba(252,170,0,255);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: rgba(252,170,0,255);
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .auth-footer a {
+            color: #ffa803;
+            font-weight: 500;
+        }
+        footer {
+            background-color: rgba(44,78,54,255);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ffa803;
+        }
+        .footer-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+        .footer-section ul li a {
+            color: #ecf0f1;
+            transition: color 0.3s;
+        }
+        .footer-section ul li a:hover {
+            color: #ffa803;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-links li a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #ffa803;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .social-links li a:hover {
+            background-color: #ffffff;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ffa803;
+            font-size: 0.9rem;
+        }
+
+                 .language-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .language-btn {
+            flex: 1;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+    /* Styles modernisés pour le formulaire d'inscription */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px);
+        padding: 2rem 1rem;
+        background-color: #f8f9fa;
+    }
+
+    .auth-form {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 500px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .auth-form:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .auth-form h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .auth-form h1:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--accent-color);
+        border-radius: 3px;
+    }
+
+    .form-group {
+        margin-bottom: 1.8rem;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.85rem 1.2rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f9f9f9;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(56, 84, 56, 0.1);
+        outline: none;
+    }
+
+    /* Style amélioré pour le bouton de soumission */
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(56, 84, 56, 0.2);
+        position: relative;
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(56, 84, 56, 0.3);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .submit-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .submit-btn:hover::after {
+        left: 100%;
+    }
+
+    /* Animation pour les champs */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+        animation: fadeIn 0.4s ease forwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .submit-btn { animation: fadeIn 0.4s ease 0.6s forwards; }
+    .auth-footer { animation: fadeIn 0.4s ease 0.7s forwards; }
+
+    /* Indicateur de champ requis */
+    .form-group label::after {
+        content: ' *';
+        color: #e74c3c;
+    }
+
+    /* Style pour les icônes dans les champs (optionnel) */
+    .form-group {
+        position: relative;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+    }
+
+    .form-control.with-icon {
+        padding-left: 40px;
+    }
+
+    /* Message d'erreur */
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        <div class="logos">
+            <img src="logo.png" alt="encheres_dz Logo">
+            <div class="logos-text">
+                <span class="main">encheres_dz</span>
+                <span class="sub">المزادات والإعلانات الجزائرية</span>
+            </div>
+        </div>
+        <div class="user-actions">
+            <a href="https://enchere-dz.com/login" class="auth-btn login-btn" style="color: orange;">تسجيل الدخول</a>
+        </div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>القائمة الرئيسية</h3>
+            <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+        </div>
+
+           <div class="menu-section">
+            <div class="menu-section-title">اللغة</div>
+            <div class="language-selector">
+ <button class="language-btn active" id="arabicBtn">
+<i class="fas fa-language"></i> العربية
+</button>
+<button class="language-btn" id="frenchBtn">
+<i class="fas fa-language"></i> Français
+</button>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">تصفح</div>
+            <div class="menu-item" id="home_btn">
+                <i class="fas fa-home"></i> الصفحة الرئيسية
+            </div>
+             <div class="menu-item" id="searchMenuItem"><i class="fas fa-search"></i> البحث</div>
+            <div class="menu-item" id="add_pub_menu">
+                <i class="fas fa-plus-circle"></i> إضافة إعلان
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">حسابك</div>
+            <div class="menu-item" id="loginMenuItem">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </div>
+            <div class="menu-item active" id="registerMenuItem">
+                <i class="fas fa-user-plus"></i> إنشاء حساب
+            </div>
+            <div class="menu-item" id="logoutMenuItem" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </div>
+        </div>
+<div class="menu-section">
+        <div class="menu-section-title">المساعدة</div>
+        <div class="menu-item">
+            <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi" >الشروط والأحكام</a>
+        </div>
+        </div>
+        
+
+       <div class="social-links">
+            <a   href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+            <a   href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+            <a   href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+         <div class="contact-info">
+        <p><i class="fas fa-envelope"></i>  ENCHERES-DZ@HOTMAIL.COM</p>
+        <p><i class="fas fa-phone"></i>  0550875781</p>
+    </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Signup Content -->
+    <main class="container auth-container">
+        <form class="auth-form" id="forms">
+            <h1>إنشاء حساب جديد</h1>
+
+            <div class="form-group">
+                <label for="register-name">  الاسم الكامل (الاسم الحقيقي)</label>
+                <input type="text" id="register-name" class="form-control" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-phone">رقم الهاتف</label>
+                <input type="tel" name="phone" id="register-phone" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-email">البريد الإلكتروني</label>
+                <input type="email" name="email" id="register-email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-password">كلمة المرور</label>
+                <input type="password" name="password" id="register-password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-confirm-password">تأكيد كلمة المرور</label>
+                <input type="password" id="register-confirm-password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="submit-btn">إنشاء حساب</button>
+
+            <div class="auth-footer">
+                <p>لديك حساب بالفعل؟ <a href="https://enchere-dz.com/login">تسجيل الدخول</a></p>
+            </div>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <
+
+    <!-- Scripts for Navbar & Side‑Menu -->
+    <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            const arabicBtn = document.getElementById('arabicBtn');
+            const frenchBtn = document.getElementById('frenchBtn');
+            
+           
+        });
+
+        // Gestion des boutons de langue
+        const arabicBtn = document.getElementById('arabicBtn');
+        const frenchBtn = document.getElementById('frenchBtn');
+
+        arabicBtn.addEventListener('click', () => {
+        });
+
+        frenchBtn.addEventListener('click', () => {
+            window.location.href = "https://enchere-dz.com/signup?lang=fr";
+        });
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeMenuBtn = document.querySelector('#closeMenuBtn');
+        const sideMenu = document.querySelector('#sideMenu');
+        const overlay = document.querySelector('#overlay');
+        const loginMenuItem = document.querySelector('#loginMenuItem');
+        const registerMenuItem = document.querySelector('#registerMenuItem');
+        const logoutMenuItem = document.querySelector('#logoutMenuItem');
+        const homeMenuItem = document.querySelector('#home_btn');
+        const addPubMenu = document.querySelector('#add_pub_menu');
+        const searchMenuItem = document.getElementById('searchMenuItem');
+
+
+        if (sessionStorage.getItem("_key")) {
+            loginMenuItem.style.display = 'none';
+            registerMenuItem.style.display = 'none';
+            logoutMenuItem.style.display = '';
+        }
+                if (sessionStorage.getItem("_key")) {
+  window.location.href = 'https://enchere-dz.com';
+}
+
+        // Toggle drawer
+        menuBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+            overlay.classList.add('active');
+        });
+        closeMenuBtn.addEventListener('click', () => closeDrawer());
+        overlay.addEventListener('click', () => closeDrawer());
+
+        function closeDrawer() {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Navigation actions
+        loginMenuItem.addEventListener('click', () =>{
+            closeDrawer()
+             setTimeout(() => {
+                             
+            window.location.href = "https://enchere-dz.com/login"},300);
+
+            })
+        registerMenuItem.addEventListener('click', () =>{
+             closeDrawer()
+            });
+        homeMenuItem.addEventListener('click', () => {
+            closeDrawer()
+              setTimeout(() => {
+            window.location.href = "https://enchere-dz.com"                  
+           },300);
+           });
+        addPubMenu.addEventListener('click', () => {
+                        closeDrawer();
+ setTimeout(() => {
+ if (sessionStorage.getItem("_key")) {
+
+                window.location.href = "https://enchere-dz.com/ajouter-annonce";
+            } else {
+                alert("يجب عليك تسجيل الدخول أولاً لتتمكن من إضافة إعلان.");
+            }
+            }, 300)
+           
+        });
+        logoutMenuItem.addEventListener('click', () => {
+            sessionStorage.removeItem("_key");
+            window.location.reload();
+        });
+
+        searchMenuItem.addEventListener('click', () => {
+           closeDrawer()
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/recherche";
+
+            }, 300)
+        });
+
+        // Signup form submission
+        document.getElementById('forms').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fullname = document.getElementById('register-name').value.trim();
+            const phone = document.getElementById('register-phone').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                return alert('كلمة المرور وتأكيد كلمة المرور غير متطابقتين.');
+            }
+            try {
+                const response = await fetch('https://enchere-dz.com/api/user/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': '78heoytx56drg4ezd163dfjjs3'
+                    },
+                    body: JSON.stringify({ fullname, phone, email, password })
+                });
+                if (response.ok) {
+                    alert('تم إنشاء الحساب بنجاح!');
+                    window.location.href = 'https://enchere-dz.com/login';
+                } else {
+                    const data = await response.json();
+                    alert(data.message || 'البريد الإلكتروني أو رقم الهاتف مستخدم بالفعل.');
+                }
+            } catch {
+                alert('تعذر الاتصال بالخادم.');
+            }
+        });
+    </script>
+</body>
+</html>

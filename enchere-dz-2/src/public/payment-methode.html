@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طرق الدفع - إعلانات دزاير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #2c3e2c;
+            --light-color: #f5f7f5;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logos {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: white;
+            margin-right: 50px;
+        }
+        
+        .logos-text {
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: 10px;
+        }
+        
+        .logos img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        
+        .logos-text .main {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logos-text .sub {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+            background-color: transparent;
+            box-shadow: none;
+            border: none;
+            margin-right: 0%;
+        }
+        
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+        }
+        
+        .side-menu.open {
+            transform: translateX(0);
+        }
+        
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .close-menu {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .close-menu:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+        
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .menu-item:hover {
+            background-color: #f5f7f5;
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .menu-item.active i {
+            color: var(--white);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Payment container */
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 2rem 0;
+        }
+        
+        .payment-form {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-form h1 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .payment-form h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        /* Payment options */
+        .payment-option {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            background: white;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .payment-option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 0;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .payment-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        .payment-option.active {
+            border-color: var(--primary-color);
+            background-color: var(--light-color);
+        }
+        
+        .payment-option.active:before {
+            height: 100%;
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--light-color), white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+        }
+        
+        .payment-details {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .payment-option.active .payment-details {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .payment-details p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .payment-details .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Bank info styles */
+        .bank-info {
+            background-color: #f0f7f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .bank-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bank-info h4 i {
+            color: var(--accent-color);
+        }
+        
+        .bank-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .bank-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bank-detail strong {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .bank-detail span {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .rib-code {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            border: 1px dashed var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .rib-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #fff8e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        /* Subscription plans */
+        .subscription-plans {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .plan {
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-color);
+            transition: var(--transition);
+            opacity: 0;
+        }
+        
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        .plan:hover:before {
+            opacity: 1;
+        }
+        
+        .plan-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .plan-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .plan-price:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        
+        .plan:hover .plan-price:after {
+            transform: scaleX(1);
+        }
+        
+        .plan-duration {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact info */
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .contact-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-text strong {
+            color: var(--primary-color);
+        }
+        
+        .contact-text span {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .payment-option {
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+        }
+        
+        .payment-option:nth-child(1) { animation-delay: 0.1s; }
+        .payment-option:nth-child(2) { animation-delay: 0.2s; }
+        
+        .subscription-plans { 
+            animation: fadeIn 0.4s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .logos-text .sub {
+                display: none;
+            }
+            
+            .logos img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .payment-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .subscription-plans {
+                flex-direction: column;
+            }
+            
+            .plan {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .bank-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .side-menu {
+                width: 280px;
+            }
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 15px;
+            margin: -12px -15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .language-btn {
+            flex: 1;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        
+        <div class="logos" style="background-color: white;">
+            <img src="logo.png" alt="encheres_dz Logo">
+            <div class="logos-text">
+                <span class="main">encheres_dz</span>
+                <span class="sub">المزادات والإعلانات الجزائرية</span>
+            </div>
+        </div>
+        
+        <div class="user-actions"></div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>القائمة الرئيسية</h3>
+            <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">اللغة</div>
+            <div class="language-selector">
+                <button class="language-btn active" id="arabicBtn">
+                    <i class="fas fa-language"></i> العربية
+                </button>
+                <button class="language-btn" id="frenchBtn">
+                    <i class="fas fa-language"></i> Français
+                </button>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">تصفح</div>
+            <div class="menu-item" id="home_btn">
+                <i class="fas fa-home"></i> الصفحة الرئيسية
+            </div>
+            <div class="menu-item" id="searchMenuItem"><i class="fas fa-search"></i> البحث</div>
+            <div class="menu-item" id="add_pub_menu">
+                <i class="fas fa-plus-circle"></i> إضافة إعلان
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">حسابك</div>
+            <div class="menu-item" id="loginMenuItem">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </div>
+            <div class="menu-item" id="registerMenuItem">
+                <i class="fas fa-user-plus"></i> إنشاء حساب
+            </div>
+            <div class="menu-item" id="my_account">
+                <i class="fas fa-user"></i> حسابي
+            </div>
+            <div class="menu-item" id="subscriptionMenuItem">
+                <i class="fas fa-crown"></i> اشتراكاتي
+            </div>
+            <div class="menu-item" id="logoutMenuItem">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">المساعدة</div>
+            <div class="menu-item">
+                <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi">الشروط والأحكام</a>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> ENCHERES-DZ@HOTMAIL.COM</p>
+            <p><i class="fas fa-phone"></i> 0550875781</p>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modern payment content -->
+    <main class="container payment-container">
+        <div class="payment-form">
+            <h1>طرق الدفع والاشتراك</h1>
+            
+            <div class="payment-option active">
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="payment-title">التحويل البريدي</h3>
+                </div>
+                <div class="payment-details">
+                    <p>يمكنك إجراء تحويل بنكي مباشر إلى حسابنا في البريد الجزائري (CPP)</p>
+                    <p class="highlight">سيتم تفعيل اشتراكك خلال 24 ساعة بعد التحقق من الدفع</p>
+                    
+                    <div class="bank-info">
+                        <h4><i class="fas fa-info-circle"></i> معلومات الحساب البنكي (CPP)</h4>
+                        <div class="bank-details">
+                            <div class="bank-detail">
+                                <strong>العنوان</strong>
+                                <span>التجزئة المختلطة الثانية شارع رقم 07 البرواقية</span>
+                            </div>
+                            <div class="bank-detail">
+                                <strong>اسم صاحب الحساب</strong>
+                                <span>بلحاج ابراهيم عبد الرحمان</span>
+                            </div>
+                           
+                            <div class="bank-detail">
+                                <strong>رقم الحساب</strong>
+                                <span>17483921</span>
+                            </div>
+                            <div class="bank-detail">
+                                <strong>مفتاح RIB</strong>
+                                <span>70</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rib-code">
+                            007999991748392170
+                        </div>
+                        
+                        <div class="rib-info">
+                            <p><i class="fas fa-exclamation-circle"></i> الرجاء استخدام الرمز البريدي الكامل (RIB) أعلاه عند إجراء التحويل</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-option">
+    <div class="payment-header">
+        <div class="payment-icon">
+            <i class="fas fa-university"></i>
+        </div>
+        <h3 class="payment-title">التحويل البنكي عبر بطاقة CIB</h3>
+    </div>
+
+    <div class="payment-details">
+        <p>يمكنك إجراء تحويل بنكي من حسابك الجاري باستخدام بطاقة CIB نحو حسابنا البنكي.</p>
+        <p class="highlight">سيتم تفعيل اشتراكك خلال 24 ساعة بعد التحقق من الدفع.</p>
+
+        <div class="bank-info">
+            <h4><i class="fas fa-info-circle"></i> معلومات الحساب البنكي</h4>
+            <div class="bank-details">
+                <div class="bank-detail">
+                    <strong>اسم المستفيد</strong>
+                    <span>EURL BAB AUTO S</span>
+                </div>
+                <div class="bank-detail">
+                    <strong>اسم البنك</strong>
+                    <span>البنك الوطني الجزائري (BNA)</span>
+                </div>
+                <div class="bank-detail">
+                    <strong>رقم الحساب (RIB)</strong>
+                    <span>853000130630027</span>
+                </div>
+                <div class="bank-detail">
+                    <strong>العنوان</strong>
+                    <span>حي محمدي التجزئة المختلطة الثانية رقم 07 البرواقية</span>
+                </div>
+            </div>
+
+            <div class="rib-code">
+                853000130630027
+            </div>
+
+            <div class="rib-info">
+                <p><i class="fas fa-exclamation-circle"></i> الرجاء إدخال رقم الحساب (RIB) الكامل بدقة عند إجراء التحويل من بنكك.</p>
+                <p><i class="fas fa-receipt"></i> احتفظ بإيصال التحويل البنكي لإرساله لنا في حال طلب إثبات.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+            <div class="payment-option">
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="payment-title">الدفع النقدي</h3>
+                </div>
+                <div class="payment-details">
+                    <p>يمكنك الدفع نقداً في مكتبنا أو نرسل مندوبنا إليك</p>
+                    <p class="highlight">هذا الخيار متاح فقط في الولايات القريبة منا. سنحدد لك الولايات المؤهلة بعد اختيار هذه الطريقة</p>
+                    
+                    <div class="contact-info">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="contact-text">
+                            <strong>الاتصال بنا:</strong>
+                            <span>0550875781</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="text-align: center; margin: 3rem 0oi  1.5rem; color: var(--primary-color); font-weight: 700;">الاشتراكات المتاحة</h3>
+            
+            <div class="subscription-plans">
+                <div class="plan">
+                    <div class="plan-title">شهري</div>
+                    <div class="plan-price">5,000 د.ج</div>
+                    <div class="plan-duration">لمدة شهر واحد</div>
+                </div>
+                
+                <div class="plan">
+                    <div class="plan-title">6 أشهر</div>
+                    <div class="plan-price">25,000 د.ج</div>
+                    <div class="plan-duration">لمدة 6 أشهر</div>
+                </div>
+                
+                <div class="plan">
+                    <div class="plan-title">سنوي</div>
+                    <div class="plan-price">45,000 د.ج</div>
+                    <div class="plan-duration">لمدة 12 شهراً</div>
+                </div>
+            </div> 
+        </div>
+    </main>
+
+    <script>
+        // Menu functionality
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeMenuBtn = document.querySelector('#closeMenuBtn');
+        const sideMenu = document.querySelector('#sideMenu');
+        const overlay = document.querySelector('#overlay');
+        const loginMenuItem = document.querySelector('#loginMenuItem');
+        const registerMenuItem = document.querySelector('#registerMenuItem');
+        const logoutMenuItem = document.querySelector('#logoutMenuItem');
+        const homeMenuItem = document.querySelector('#home_btn');
+        const addAnnounceBtnMenu = document.querySelector('#add_pub_menu');
+        const searchMenuItem = document.getElementById('searchMenuItem');
+        const arabicBtn = document.getElementById('arabicBtn');
+        const frenchBtn = document.getElementById('frenchBtn');
+        const subscriptionMenuItem = document.getElementById('subscriptionMenuItem');
+        const myAccount = document.getElementById('my_account');
+        let id;
+
+        // Get user ID from session
+        async function getID() {
+            const userStr = sessionStorage.getItem("_profile");
+            const user = JSON.parse(userStr);
+            console.log("user id = "+user.id);
+            id = user.id;
+
+            if (!userStr) {
+                console.log("User not found in sessionStorage");
+                return;
+            }
+            return;
+        }
+
+        getID();
+
+        // Check if user is logged in
+        if (sessionStorage.getItem("_key")) {
+            loginMenuItem.style.display = 'none';
+            registerMenuItem.style.display = 'none';
+            logoutMenuItem.style.display = '';
+        } else {
+           window.location.href = "https://enchere-dz.com/login";
+        }
+
+        // Toggle menu function
+        function toggleMenu() {
+            const isOpen = sideMenu.classList.contains('open');
+            if (isOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        function openMenu() {
+            sideMenu.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenu() {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // Menu item actions
+        loginMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/login";
+            }, 300);
+        });
+
+        registerMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/signup";
+            }, 300);
+        });
+
+        homeMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {  
+                window.location.href = "https://enchere-dz.com";
+            }, 300);
+        });
+
+        subscriptionMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/mon-abonnement";
+            }, 300);
+        });
+
+        logoutMenuItem.addEventListener('click', () => {
+            sessionStorage.removeItem("_key");
+            window.location.href = "https://enchere-dz.com/login";
+        });
+
+        addAnnounceBtnMenu.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                addAnnonce();
+            }, 300);
+        });
+
+        searchMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/recherche";
+            }, 300);
+        });
+
+        myAccount.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                const user = sessionStorage.getItem("_profile");
+                const id = JSON.parse(user).id;
+                window.location.href = "https://enchere-dz.com/profile/"+id+"";
+            }, 300); 
+        });
+
+        function addAnnonce() {
+            const isLoggedIn = !!sessionStorage.getItem("_key");
+
+            if (isLoggedIn) {
+                window.location.href = "https://enchere-dz.com/ajouter-annonce";
+            } else {
+                alert("يجب عليك تسجيل الدخول أولاً لتتمكن من إضافة إعلان.");
+                window.location.href = "https://enchere-dz.com/login";
+            }
+        }
+
+        // Language switcher
+        arabicBtn.addEventListener('click', () => {
+            // Already on Arabic page
+        });
+
+        frenchBtn.addEventListener('click', () => {
+            window.location.href = "?lang=fr";
+        });
+
+        // Payment option selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

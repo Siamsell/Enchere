@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعلانات دزاير - الموقع الأول للمزادات في الجزائر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+          background-color:rgba(44,78,54,255);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('Online Reputation Management for Hospitals in Kerala -.jfif') center/cover no-repeat;
+            color: #fff;
+        }
+        
+        .logo span {
+            color:rgba(252,170,0,255);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover, 
+        nav ul li a.active {
+            color:rgba(252,170,0,255);
+        }
+        
+        nav ul li a.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color:rgba(252,170,0,255);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .auth-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .register-btn {
+            background-color:rgba(252,170,0,255);
+            color: white;
+        }
+        
+        .register-btn:hover {
+            background-color:rgba(252,170,0,255);
+        }
+        
+        .language-switcher {
+            color: white;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .language-switcher span {
+            cursor: pointer;
+        }
+        
+        .language-switcher span.active {
+            font-weight: bold;
+            color:rgba(252,170,0,255);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44,78,54,255), rgba(1, 16, 15, 0.7)), 
+                        url('001.jfif') center/cover no-repeat;
+            color: white;
+            padding: 9rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .primary-btn {
+            background-color:rgba(252,170,0,255);
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: rgba(252,170,0,255);
+        }
+        
+        .secondary-btn {
+            background-color: white;
+            color: #2c3e50;
+            border: 1px solid white;
+        }
+        
+        .secondary-btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: -2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .search-input, .search-select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        .search-submit {
+            background-color:rgba(252,170,0,255);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .search-submit:hover {
+            background-color: rgba(252,170,0,255);
+        }
+        
+        /* Ads Section */
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #411903;
+            display: inline-block;
+        }
+        
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .ad-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .ad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ad-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .ad-card:hover .ad-image img {
+            transform: scale(1.05);
+        }
+        
+        .ad-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .ad-badge.premium {
+            background-color: rgba(252,170,0,255);
+        }
+        
+        .ad-info {
+            padding: 1rem;
+        }
+        
+        .ad-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .ad-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ad-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ad-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .ad-status.available {
+            background-color: #e8f8f5;
+            color: #27ae60;
+        }
+        
+        .ad-status.expired {
+            background-color: #fdedec;
+            color: #e74c3c;
+        }
+        
+        .ad-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+        
+        .ad-action-btn {
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .ad-action-btn:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .view-details {
+            color: #3498db;
+        }
+        
+        .save-ad {
+            color: #7f8c8d;
+        }
+        
+        .save-ad.saved {
+            color: #e74c3c;
+        }
+        
+        /* Categories Section */
+        .categories {
+            margin: 3rem 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+        
+        .category-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            background-color: #2c3e50;
+            color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+        
+        /* Pricing Section */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pricing-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.recommended {
+            border: 2px solid #3498db;
+        }
+        
+        .recommended-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-card .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: #27ae60;
+            display: block;
+        }
+        
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-card ul li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+        
+        .pricing-card ul li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: #27ae60;
+        }
+        
+        .pricing-card button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .pricing-card button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            margin: 3rem 0;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .testimonial-text:before,
+        .testimonial-text:after {
+            content: '"';
+            font-size: 2rem;
+            color: #3498db;
+            opacity: 0.3;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+     
+      
+         footer {
+             background: linear-gradient(rgba(44,78,54,255), rgba(1, 16, 15, 0.7)), 
+                        url('001.jfif') center/cover no-repeat;
+            color: white;
+            padding: 6rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color:#ffa803
+        }
+        
+        .footer-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ecf0f1;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color:#ffa803
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links li a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #ffa803;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links li a:hover {
+            background-color: #ffffff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ffa803;
+            font-size: 0.9rem;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalopen 0.5s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+        
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+      
+       
+        
+        /* Ad Details Modal */
+        .ad-details-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ad-details-images img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .ad-details-images img:hover {
+            transform: scale(1.05);
+        }
+        
+        .ad-details-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .ad-details-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+        
+        .ad-details-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #7f8c8d;
+            flex-wrap: wrap;
+        }
+        
+        .ad-details-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .ad-details-contact {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .ad-details-contact h4 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .ad-details-contact-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .ad-details-contact-buttons button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .ad-details-contact-buttons button:hover {
+            opacity: 0.9;
+        }
+        
+        .call-btn {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .telegram-btn {
+            background-color: #0088cc;
+            color: white;
+        }
+        
+        .copy-btn {
+            background-color: #7f8c8d;
+            color: white;
+        }
+        
+        /* Payment Modal */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .payment-method {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: #3498db;
+        }
+        
+        .payment-method.selected {
+            border-color: #3498db;
+            background-color: #ebf5fb;
+        }
+        
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #3498db;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                background-color: #2c3e50;
+                padding: 1rem;
+                border-radius: 0 0 0 8px;
+                box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+                transition: right 0.3s;
+                z-index: 99;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.75rem;
+            }
+            
+            .header-actions {
+                margin-right: auto;
+                margin-left: 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                width: 95%;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+            
+            .hero-btn {
+                width: 100%;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Enchères<span>dz</span></div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="#Header">الرئيسية</a></li>
+                    <li><a href="#categories">تصنيفات</a></li>
+                    <li><a href="#how-it-works">كيفية النشر</a></li>
+                    <li><a href="#prix">الباقات</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <span class="active">العربية</span> | <span>Français</span>
+             </div>
+                <a href="https://enchere-dz.com/login" class="auth-btn login-btn">تسجيل الدخول</a>
+                <a href="https://enchere-dz.com/signup" class="auth-btn register-btn active">إنشاء حساب</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero"  id ="Header">
+        <div class="container">
+            <h1>الموقع الأول للمزادات في الجزائر</h1>
+            <p>بيع واشتري بسهولة وسرعة - آلاف الإعلانات تنتظرك كل يوم في جميع أنحاء الجزائر</p>
+            <div class="hero-btns">
+             <button  class="hero-btn primary-btn" id="add_annonce" style="display: none;">نشر إعلان جديد </button>
+            <button class="hero-btn secondary-btn" onclick="window.location.href='#allannonce'">تصفح الإعلانات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container">
+        <div class="search-section">
+            <form class="search-form">
+                <input type="text" class="search-input" placeholder="ابحث عن إعلان...">
+                <select class="search-select">
+                    <option value="">كل الولايات</option>
+                    <option value="algiers">الجزائر</option>
+                    <option value="oran">وهران</option>
+                    <option value="constantine">قسنطينة</option>
+                    <option value="annaba">عنابة</option>
+                    <option value="blida">البليدة</option>
+                </select>
+                <select class="search-select">
+                    <option value="">كل الفئات</option>
+                    <option value="cars">سيارات</option>
+                    <option value="property">عقارات</option>
+                    <option value="electronics">إلكترونيات</option>
+                    <option value="furniture">أثاث</option>
+                    <option value="jobs">وظائف</option>
+                </select>
+                <button type="submit" class="search-submit">
+                    <i class="fas fa-search"></i> بحث
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Latest Ads Section -->
+    <section class="container" id="allannonce">
+        <h2 class="section-title">آخر الإعلانات</h2>
+        <div class="ads-grid" id="adsContainer">
+            <!-- Ads will be loaded here by JavaScript -->
+        </div>
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="primary-btn" style="padding: 0.75rem 2rem;">عرض المزيد</button>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container categories" id="categories">
+        <h2 class="section-title">تصنيفات الإعلانات</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3 class="category-name">سيارات</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3 class="category-name">عقارات</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="category-name">إلكترونيات</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-couch"></i>
+                </div>
+                <h3 class="category-name">أثاث</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3 class="category-name">ملابس</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3 class="category-name">وظائف</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works" >
+        <div class="container">
+            <h2 class="section-title" style="color: white; border-color: #2c4e35">كيف يعمل الموقع؟</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">إنشاء حساب</h3>
+                    <p>سجل في الموقع ببياناتك الأساسية لتبدأ في نشر إعلاناتك</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">اختر باقة النشر</h3>
+                    <p>اختر الباقة المناسبة لك من بين باقاتنا المميزة</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">نشر الإعلان</h3>
+                    <p>أضف إعلانك مع الصور والتفاصيل الكاملة</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">تواصل مع العملاء</h3>
+                    <p>استقبل اتصالات العملاء مباشرة على هاتفك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="container" id="prix">
+        <h2 class="section-title">باقات النشر</h2>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>شهري</h3>
+                <p class="price">3000 د.ج</p>
+                <ul>
+                    <li>نشر إعلانات غير محدود</li>
+                    <li>صلاحية 30 يوم</li>
+                    <!-- <li>إعلان واحد مميز</li> -->
+                    <li>دعم فني عبر الهاتف</li>
+                </ul>
+                <button>اشترك الآن</button>
+            </div>
+            <div class="pricing-card recommended">
+                <div class="recommended-badge">الأفضل</div>
+                <h3>6 أشهر</h3>
+                <p class="price">15000 د.ج <span>+ شهر مجاني</span></p>
+                <ul>
+                    <li>نشر إعلانات غير محدود</li>
+                    <li>صلاحية 210 يوم</li>
+                    <!-- <li>3 إعلانات مميزة</li> -->
+                    <li>دعم فني عبر الهاتف</li>
+                    <li>شهر مجاني إضافي</li>
+                </ul>
+                <button>اشترك الآن</button>
+            </div>
+            <div class="pricing-card">
+                <h3>سنوي</h3>
+                <p class="price">27000 د.ج <span>+ 3 أشهر مجانية</span></p>
+                <ul>
+                    <li>نشر إعلانات غير محدود</li>
+                    <li>صلاحية 450 يوم</li>
+                    <!-- <li>إعلانات مميزة غير محدودة</li> -->
+                    <li>دعم فني عبر الهاتف</li>
+                    <li>3 أشهر مجانية إضافية</li>
+                    <li>تخفيضات حصرية</li>
+                </ul>
+                <button>اشترك الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="container testimonials">
+        <h2 class="section-title">آراء عملائنا</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    لقد ساعدني موقع إعلانات دزاير في بيع سيارتي خلال 3 أيام فقط، شكرًا لكم على هذه الخدمة المميزة!
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://via.placeholder.com/150" alt="User">
+                    </div>
+                    <div class="author-info">
+                        <h4>أحمد بوعزيز</h4>
+                        <p>مستخدم منذ 2022</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    أفضل موقع إعلانات في الجزائر، واجهة سهلة الاستخدام وإعلاناتي تحصل على الكثير من المشاهدات.
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://via.placeholder.com/150" alt="User">
+                    </div>
+                    <div class="author-info">
+                        <h4>سميرة قاسمي</h4>
+                        <p>مستخدمة منذ 2021</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    الباقة السنوية توفر لي الكثير من المال، أنشر أكثر من 50 إعلان شهريًا لوكالتي العقارية.
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="https://via.placeholder.com/150" alt="User">
+                    </div>
+                    <div class="author-info">
+                        <h4>خالد زواوي</h4>
+                        <p>صاحب وكالة عقارية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+      <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن الموقع</h3>
+                    <p>إعلانات دزاير هو الموقع الأول للإعلانات في الجزائر، نقدم خدمة مميزة لنشر وعرض الإعلانات مجانًا للمستخدمين.</p>
+                    <p>نحن نضمن لك وصول إعلاناتك إلى أكبر عدد ممكن من المهتمين.</p>
+                </div>
+                <div class="footer-section" id="contact">
+                    <h3>اتصل بنا</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> الجزائر العاصمة، الجزائر</p>
+                    <p><i class="fas fa-phone"></i> 0550875781</p>
+                    <p><i class="fas fa-envelope"></i> Encheres-dz@htmail.com</p>
+                    <ul class="social-links">
+                        <li><a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© إعلانات Enchères dz. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Ad Details Modal -->
+    <div id="adDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="adDetailsContent">
+                <!-- Ad details will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>إتمام عملية الدفع</h2>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>اختر طريقة الدفع</label>
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="ccp">
+                            <i class="fas fa-university"></i>
+                            <p>CCP</p>
+                        </div>
+                        <div class="payment-method" data-method="cib">
+                            <i class="fas fa-credit-card"></i>
+                            <p>CIB</p>
+                        </div>
+                        <div class="payment-method" data-method="cash">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <p>نقدي</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedPaymentMethod" required>
+                </div>
+                
+                <div id="ccpDetails" class="payment-details" style="display: none;">
+                    <div class="form-group">
+                        <label>رقم حساب CCP</label>
+                        <input type="text" class="form-control" placeholder="123-456-789-00">
+                    </div>
+                </div>
+                
+                <div id="cibDetails" class="payment-details" style="display: none;">
+                    <div class="form-group">
+                        <label>رقم البطاقة</label>
+                        <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ الانتهاء</label>
+                        <input type="text" class="form-control" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" class="form-control" placeholder="123">
+                    </div>
+                </div>
+                
+                <div id="cashDetails" class="payment-details" style="display: none;">
+                    <div class="form-group">
+                        <p>سيتم التواصل معك لتحديد موعد الدفع نقدًا في مكتبنا أو في مكانك</p>
+                    </div>
+                </div>
+                
+                <button type="submit">إتمام الدفع</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample ads data
+        const adsData = [
+            {
+                id: 1,
+                title: "سيارة بيجو 208 - 2020",
+                price: "3,200,000",
+                wilaya: "الجزائر",
+                date: "منذ يومين",
+                status: "available",
+                premium: true,
+                description: "سيارة بيجو 208 موديل 2020 بحالة جيدة جدا، لون أبيض، مسافة 45000 كم، مكيفة، زجاج كهربائي، مرايا كهربائية، نظام ملاحة. السعر قابل للتفاوض بالنسبة للمشتري الجاد.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=Peugeot+208",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=Peugeot+208+Front",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=Peugeot+208+Back"
+                ],
+                phone: "0555123456",
+                category: "cars"
+            },
+            {
+                id: 2,
+                title: "شقة للبيع - حي المرسى",
+                price: "45,000,000",
+                wilaya: "وهران",
+                date: "منذ أسبوع",
+                status: "available",
+                premium: false,
+                description: "شقة فاخرة للبيع في حي المرسى، مساحة 120 م²، الطابق الثالث، تتكون من 3 غرف، صالون كبير، مطبخ مجهز، حمامين، مطلة على البحر. الشقة جديدة لم تسكن من قبل.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=Apartment",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=Living+Room",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=Bedroom"
+                ],
+                phone: "0777123456",
+                category: "property"
+            },
+            {
+                id: 3,
+                title: "هاتف سامسونج S21 Ultra",
+                price: "80,000",
+                wilaya: "قسنطينة",
+                date: "منذ 3 أيام",
+                status: "available",
+                premium: true,
+                description: "هاتف سامسونج جالكسي S21 Ultra، 256GB، اللون أسود، بحالة ممتازة، مع علبته وكل ملحقاته الأصلية. الضمان لا يزال ساري المفعول لمدة 3 أشهر.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=S21+Ultra",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=S21+Ultra+Front",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=S21+Ultra+Back"
+                ],
+                phone: "0666123456",
+                category: "electronics"
+            },
+            {
+                id: 4,
+                title: "فيلا للإيجار - الساحل",
+                price: "120,000/شهر",
+                wilaya: "بجاية",
+                date: "منذ شهر",
+                status: "expired",
+                premium: false,
+                description: "فيلا فاخرة للإيجار في منطقة الساحل، مساحة 200 م²، حديقة خاصة، مسبح، 4 غرف نوم، 3 حمامات، موقف سيارات. العقد لمدة سنة قابلة للتجديد.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=Villa",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=Villa+Garden",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=Villa+Pool"
+                ],
+                phone: "0778123456",
+                category: "property"
+            },
+            {
+                id: 5,
+                title: "دراجة نارية - YAMAHA MT-07",
+                price: "1,500,000",
+                wilaya: "عنابة",
+                date: "منذ 5 أيام",
+                status: "available",
+                premium: false,
+                description: "دراجة نارية ياماها MT-07 موديل 2018، لون أزرق، مسافة 15000 كم، بحالة ممتازة، فحص تقني ساري المفعول لمدة 6 أشهر. السعر نهائي.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=Yamaha+MT07",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=Yamaha+MT07+Side",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=Yamaha+MT07+Front"
+                ],
+                phone: "0556123456",
+                category: "cars"
+            },
+            {
+                id: 6,
+                title: "لابتوب ديل - XPS 15",
+                price: "180,000",
+                wilaya: "تيزي وزو",
+                date: "منذ أسبوعين",
+                status: "expired",
+                premium: false,
+                description: "لابتوب ديل XPS 15، شاشة 15.6 بوصة بدقة 4K، معالج i7 الجيل العاشر، 16GB RAM، 512GB SSD، كرت شاشة NVIDIA GTX 1650. الجهاز بحالة ممتازة.",
+                images: [
+                    "https://via.placeholder.com/600x400/2c3e50/ffffff?text=Dell+XPS+15",
+                    "https://via.placeholder.com/600x400/34495e/ffffff?text=Dell+XPS+15+Open",
+                    "https://via.placeholder.com/600x400/7f8c8d/ffffff?text=Dell+XPS+15+Back"
+                ],
+                phone: "0667123456",
+                category: "electronics"
+            }
+        ];
+
+        // DOM Elements
+        const adsContainer = document.getElementById('adsContainer');
+        const loginBtn = document.querySelector('.login-btn');
+        const registerBtn = document.querySelector('.register-btn');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const adDetailsModal = document.getElementById('adDetailsModal');
+        const paymentModal = document.getElementById('paymentModal');
+        const showRegisterLink = document.getElementById('showRegisterLink');
+        const showLoginLink = document.getElementById('showLoginLink');
+        const closeButtons = document.querySelectorAll('.close');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentDetails = document.querySelectorAll('.payment-details');
+        const selectedPaymentMethod = document.getElementById('selectedPaymentMethod');
+        const add_annonce = document.getElementById("add_annonce")
+
+        if (sessionStorage.getItem("_key")) {
+            registerBtn.style.display = 'none';
+            loginBtn.style.display = 'none';
+            add_annonce.style.display = ''
+        }
+
+        add_annonce.onclick = function(e) {
+            window.location.href='https://enchere-dz.com/ajouter_annonce'
+        }
+
+
+        // Display ads on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        displayAds(adsData);
+        
+        // Set current year in footer
+        document.querySelector('.copyright p').textContent = `© ${new Date().getFullYear()} إعلانات Enchères dz . جميع الحقوق محفوظة.`;
+
+        // Gestionnaire pour tous les boutons de fermeture
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+    });
+
+    // Fermer les modals en cliquant à l'extérieur
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
+        }
+    });
+        // Display ads function
+        function displayAds(ads) {
+            adsContainer.innerHTML = '';
+            
+            ads.forEach(ad => {
+                const adCard = document.createElement('div');
+                adCard.className = 'ad-card';
+                adCard.innerHTML = `
+                    <div class="ad-image">
+                        <img src="${ad.images[0]}" alt="${ad.title}">
+                        ${ad.premium ? '<span class="ad-badge premium"  style="display: none;">مميز</span>' : ''}
+                    </div>
+                    <div class="ad-info">
+                        <h3 class="ad-title">${ad.title}</h3>
+                        <p class="ad-price">${ad.price} ${ad.category === 'property' && ad.title.includes('للإيجار') ? '/شهر' : 'د.ج'}</p>
+                        <div class="ad-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${ad.wilaya}</span>
+                            <span><i class="far fa-clock"></i> ${ad.date}</span>
+                        </div>
+                        <div class="ad-status ${ad.status === 'available' ? 'available' : 'expired'}">
+                            ${ad.status === 'available' ? 'متوفر' : 'منتهي'}
+                        </div>
+                        <div class="ad-actions">
+                            <button class="ad-action-btn view-details" onclick="showAdDetails(${ad.id})">
+                                <i class="fas fa-eye"></i> التفاصيل
+                            </button>
+                            <button class="ad-action-btn save-ad" style="display: none;">
+                                <i class="far fa-heart"></i> حفظ
+                            </button>
+                        </div>
+                    </div>
+                `;
+                adsContainer.appendChild(adCard);
+            });
+            
+            // Add event listeners to save buttons
+            document.querySelectorAll('.save-ad').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('saved');
+                    this.innerHTML = this.classList.contains('saved') ? 
+                        '<i class="fas fa-heart"></i> محفوظ' : 
+                        '<i class="far fa-heart"></i> حفظ';
+                });
+            });
+        }
+
+        // Show ad details function
+     function showAdDetails(adId) {
+    window.location.href = `annonce-details.html`;
+}
+
+        // Modal functions
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'block';
+        });
+
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'block';
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerModal.style.display = 'none';
+            loginModal.style.display = 'block';
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'none';
+                adDetailsModal.style.display = 'none';
+                paymentModal.style.display = 'none';
+            });
+        });
+
+     
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+      
+        // Search functionality
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+            const wilaya = document.querySelectorAll('.search-select')[0].value;
+            const category = document.querySelectorAll('.search-select')[1].value;
+            
+            let filteredAds = adsData;
+            
+            if (searchTerm) {
+                filteredAds = filteredAds.filter(ad => 
+                    ad.title.toLowerCase().includes(searchTerm) || 
+                    ad.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (wilaya) {
+                filteredAds = filteredAds.filter(ad => 
+                    ad.wilaya.toLowerCase().includes(wilaya)
+                );
+            }
+            
+            if (category) {
+                filteredAds = filteredAds.filter(ad => 
+                    ad.category === category
+                );
+            }
+            
+            displayAds(filteredAds);
+        });
+
+        // Make functions available globally
+        window.showAdDetails = showAdDetails;
+        window.callNumber = callNumber;
+        window.openWhatsApp = openWhatsApp;
+        window.openTelegram = openTelegram;
+        window.copyNumber = copyNumber;
+    </script>
+</body>
+</html>

@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>لوحة التحكم الإدارية</title>
+  <style>
+    :root {
+      --primary-color: #27ae60;
+      --secondary-color: orange;
+      --dark-color: #2c3e50;
+      --light-color: #ecf0f1;
+      --danger-color: #e74c3c;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --info-color: #3498db;
+      --sidebar-width: 250px;
+      --header-height: 60px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f6fa;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--dark-color);
+      color: white;
+      position: fixed;
+      height: 100vh;
+      transition: all 0.3s;
+      z-index: 1000;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      right: 0;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-header h3 {
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+
+    .sidebar-menu ul {
+      list-style: none;
+      padding-right: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      border-right: 4px solid var(--primary-color);
+      border-left: none;
+    }
+
+    .sidebar-menu i {
+      margin-left: 10px;
+      margin-right: 0;
+      font-size: 1.1rem;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      margin-right: var(--sidebar-width);
+      transition: all 0.3s;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      height: var(--header-height);
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu-toggle {
+      font-size: 1.5rem;
+      color: var(--dark-color);
+      cursor: pointer;
+      margin-left: 20px;
+      margin-right: 0;
+      display: none;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+      margin-right: 0;
+    }
+
+    /* Content Styles */
+    .content {
+      padding: 20px;
+    }
+
+    .page-title {
+      margin-bottom: 20px;
+      color: var(--dark-color);
+      font-size: 1.8rem;
+    }
+
+    /* Cards Styles */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      color: #7f8c8d;
+    }
+
+    .card-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--dark-color);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .card-users .card-icon {
+      background-color: var(--info-color);
+    }
+
+    .card-annonces .card-icon {
+      background-color: var(--success-color);
+    }
+
+    .card-abonnements .card-icon {
+      background-color: var(--warning-color);
+    }
+
+    /* Search Filter */
+    .search-filter {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-filter input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      max-width: 400px;
+    }
+
+    .search-filter i {
+      margin-right: -30px;
+      margin-left: 0;
+      color: #7f8c8d;
+    }
+
+    /* Table Styles */
+    .table-container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px 15px;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      color: #7f8c8d;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .status {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status.user {
+      background-color: #d4edff;
+      color: var(--info-color);
+    }
+
+    .status.admin {
+      background-color: #d1f0d9;
+      color: var(--success-color);
+    }
+
+    .status.attente {
+      background-color: #fff3cd;
+      color: var(--warning-color);
+    }
+
+    .status.succes {
+      background-color: #d1f0d9;
+      color: var(--success-color);
+    }
+
+    .status.annule {
+      background-color: #f8d7da;
+      color: var(--danger-color);
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      margin-left: 5px;
+      margin-right: 0;
+    }
+
+    .edit-btn {
+      background-color: var(--info-color);
+      color: white;
+      display: none;
+    }
+
+    .delete-btn {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .accept-btn {
+      background-color: var(--success-color);
+      color: white;
+    }
+
+    .reject-btn {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    .accept-btn:hover {
+      background-color: #219653;
+    }
+
+    .reject-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      color: var(--dark-color);
+    }
+
+    .close-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #7f8c8d;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #7f8c8d;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #95a5a6;
+      color: white;
+      margin-left: 10px;
+      margin-right: 0;
+    }
+
+    .btn-primary:hover {
+      background-color: #219653;
+    }
+
+    .btn-secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    /* Tab Styles */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+      border-bottom: 3px solid var(--primary-color);
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(100%);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-right: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Image thumbnail */
+    .thumbnail {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* Video thumbnail */
+    .video-thumbnail {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+    }
+  </style>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-cog"></i> لوحة التحكم</h3>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> الرئيسية</a></li>
+          <li><a href="#" data-tab="users"><i class="fas fa-users"></i> المستخدمين</a></li>
+          <li><a href="#" data-tab="annonces"><i class="fas fa-home"></i> الإعلانات</a></li>
+          <li><a href="#" data-tab="abonnements"><i class="fas fa-credit-card"></i> الاشتراكات</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <h3 id="pageHeader">لوحة التحكم</h3>
+        </div>
+        <div class="header-right">
+          <div class="user-info">
+            <img src="https://via.placeholder.com/40" alt="User" />
+            <span>مدير</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboardTab">
+          <h1 class="page-title">الرئيسية</h1>
+
+          <!-- Stats Cards -->
+          <div class="cards">
+            <div class="card card-users">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">إجمالي المستخدمين</div>
+                  <div class="card-value" id="totalUsers">0</div>
+                </div>
+                <div class="card-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card card-annonces">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">إجمالي الإعلانات</div>
+                  <div class="card-value" id="totalAnnonces">0</div>
+                </div>
+                <div class="card-icon">
+                  <i class="fas fa-home"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card card-abonnements">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">إجمالي الاشتراكات</div>
+                  <div class="card-value" id="totalAbonnements">0</div>
+                </div>
+                <div class="card-icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div class="tab-content" id="usersTab">
+          <h1 class="page-title">إدارة المستخدمين</h1>
+
+          <div class="table-container">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <h3>جميع المستخدمين</h3>
+              <button class="btn btn-primary" id="addUserBtn">
+                <i class="fas fa-plus"></i> إضافة مستخدم
+              </button>
+            </div>
+            
+            <!-- Search Filter -->
+            <div class="search-filter">
+              <input type="text" id="searchUsersInput" placeholder="بحث في المستخدمين...">
+              <i class="fas fa-search"></i>
+            </div>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>الاسم الكامل</th>
+                  <th>البريد الإلكتروني</th>
+                  <th>الهاتف</th>
+                  <th>الدور</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Annonces Tab -->
+        <div class="tab-content" id="annoncesTab">
+          <h1 class="page-title">إدارة الإعلانات</h1>
+
+          <div class="table-container">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <h3>جميع الإعلانات</h3>
+            </div>
+            
+            <!-- Search Filter -->
+            <div class="search-filter">
+              <input type="text" id="searchAnnoncesInput" placeholder="بحث في الإعلانات...">
+              <i class="fas fa-search"></i>
+            </div>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>الصورة</th>
+                  <th>العنوان</th>
+                  <th>السعر</th>
+                  <th>الولاية</th>
+                  <th>البلدية</th>
+                  <th>الناشر</th>
+                  <th>الهاتف</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="annoncesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Abonnements Tab -->
+        <div class="tab-content" id="abonnementsTab">
+          <h1 class="page-title">إدارة الاشتراكات</h1>
+
+          <div class="table-container">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <h3>جميع الاشتراكات</h3>
+            </div>
+            
+            <!-- Search Filter -->
+            <div class="search-filter">
+              <input type="text" id="searchAbonnementsInput" placeholder="بحث في الاشتراكات...">
+              <i class="fas fa-search"></i>
+            </div>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>المستخدم</th>
+                  <th>تاريخ البداية</th>
+                  <th>تاريخ النهاية</th>
+                  <th>المدة (أشهر)</th>
+                  <th>السعر</th>
+                  <th>طريقة الدفع</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="abonnementsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit User Modal -->
+  <div class="modal" id="userModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">إضافة مستخدم</h3>
+        <span class="close-btn" id="closeModal">&times;</span>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userId" />
+        <div class="form-group">
+          <label for="fullname">الاسم الكامل</label>
+          <input type="text" id="fullname" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">الهاتف</label>
+          <input type="text" id="phone" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="role">الدور</label>
+          <select id="role" class="form-control" required>
+            <option value="user">مستخدم</option>
+            <option value="admin">مدير</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">حفظ</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تأكيد الحذف</h3>
+        <span class="close-btn" id="closeDeleteModal">&times;</span>
+      </div>
+      <div style="padding:20px;">
+        <p id="deleteModalMessage">هل أنت متأكد أنك تريد حذف هذا المستخدم؟</p>
+        <input type="hidden" id="deleteItemId" />
+        <input type="hidden" id="deleteItemType" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmDeleteBtn" style="background-color: var(--danger-color);">حذف</button>
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annonce Status Modal -->
+  <div class="modal" id="annonceStatusModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تغيير حالة الإعلان</h3>
+        <span class="close-btn" id="closeAnnonceStatusModal">&times;</span>
+      </div>
+      <div style="padding:20px;">
+        <p>اختر الحالة الجديدة للإعلان:</p>
+        <input type="hidden" id="annonceId" />
+        <select id="annonceStatus" class="form-control">
+          <option value="accepte">مقبول</option>
+          <option value="refuse">مرفوض</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmAnnonceStatusBtn">تأكيد</button>
+        <button type="button" class="btn btn-secondary" id="cancelAnnonceStatusBtn">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abonnement Accept Modal -->
+  <div class="modal" id="abonnementAcceptModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">قبول الاشتراك</h3>
+        <span class="close-btn" id="closeAbonnementAcceptModal">&times;</span>
+      </div>
+      <div style="padding:20px;">
+        <p>هل تريد قبول هذا الاشتراك؟ سيتم تفعيله فوراً.</p>
+        <input type="hidden" id="abonnementAcceptId" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmAbonnementAcceptBtn">نعم، قبول</button>
+        <button type="button" class="btn btn-secondary" id="cancelAbonnementAcceptBtn">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abonnement Reject Modal -->
+  <div class="modal" id="abonnementRejectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">رفض الاشتراك</h3>
+        <span class="close-btn" id="closeAbonnementRejectModal">&times;</span>
+      </div>
+      <div style="padding:20px;">
+        <p>هل تريد رفض هذا الاشتراك؟</p>
+        <input type="hidden" id="abonnementRejectId" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmAbonnementRejectBtn" style="background-color: var(--danger-color);">نعم، رفض</button>
+        <button type="button" class="btn btn-secondary" id="cancelAbonnementRejectBtn">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const usersTableBody = document.getElementById('usersTableBody');
+    const annoncesTableBody = document.getElementById('annoncesTableBody');
+    const abonnementsTableBody = document.getElementById('abonnementsTableBody');
+    const totalUsersElement = document.getElementById('totalUsers');
+    const totalAnnoncesElement = document.getElementById('totalAnnonces');
+    const totalAbonnementsElement = document.getElementById('totalAbonnements');
+    const addUserBtn = document.getElementById('addUserBtn');
+    const userModal = document.getElementById('userModal');
+    const deleteModal = document.getElementById('deleteModal');
+    const annonceStatusModal = document.getElementById('annonceStatusModal');
+    const abonnementAcceptModal = document.getElementById('abonnementAcceptModal');
+    const abonnementRejectModal = document.getElementById('abonnementRejectModal');
+    const closeModal = document.getElementById('closeModal');
+    const closeDeleteModal = document.getElementById('closeDeleteModal');
+    const closeAnnonceStatusModal = document.getElementById('closeAnnonceStatusModal');
+    const closeAbonnementAcceptModal = document.getElementById('closeAbonnementAcceptModal');
+    const closeAbonnementRejectModal = document.getElementById('closeAbonnementRejectModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const cancelAnnonceStatusBtn = document.getElementById('cancelAnnonceStatusBtn');
+    const cancelAbonnementAcceptBtn = document.getElementById('cancelAbonnementAcceptBtn');
+    const cancelAbonnementRejectBtn = document.getElementById('cancelAbonnementRejectBtn');
+    const userForm = document.getElementById('userForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const userIdInput = document.getElementById('userId');
+    const fullnameInput = document.getElementById('fullname');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const passwordInput = document.getElementById('password');
+    const roleInput = document.getElementById('role');
+    const deleteItemIdInput = document.getElementById('deleteItemId');
+    const deleteItemTypeInput = document.getElementById('deleteItemType');
+    const deleteModalMessage = document.getElementById('deleteModalMessage');
+    const searchUsersInput = document.getElementById('searchUsersInput');
+    const searchAnnoncesInput = document.getElementById('searchAnnoncesInput');
+    const searchAbonnementsInput = document.getElementById('searchAbonnementsInput');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const confirmAnnonceStatusBtn = document.getElementById('confirmAnnonceStatusBtn');
+    const confirmAbonnementAcceptBtn = document.getElementById('confirmAbonnementAcceptBtn');
+    const confirmAbonnementRejectBtn = document.getElementById('confirmAbonnementRejectBtn');
+    const annonceIdInput = document.getElementById('annonceId');
+    const annonceStatusInput = document.getElementById('annonceStatus');
+    const abonnementAcceptIdInput = document.getElementById('abonnementAcceptId');
+    const abonnementRejectIdInput = document.getElementById('abonnementRejectId');
+    const pageHeader = document.getElementById('pageHeader');
+
+    // Tab elements
+    const tabLinks = document.querySelectorAll('.sidebar-menu a[data-tab]');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    if (!localStorage.getItem("adminUser")) {
+      window.location.href = 'https://enchere-dz.com/admin-login';
+    }
+   
+    // API base URL
+    const API_BASE_URL = 'https://enchere-dz.com/api';
+    
+    // In-memory data
+    let usersData = [];
+    let filteredUsers = [];
+    let annoncesData = [];
+    let filteredAnnonces = [];
+    let abonnementsData = [];
+    let filteredAbonnements = [];
+
+    initDashboard();
+
+    async function initDashboard() {
+      setupEventListeners();
+      await loadAllData();
+      renderStats();
+      renderUsersTable();
+      renderAnnoncesTable();
+      renderAbonnementsTable();
+    }
+
+    // Fetch all data from API
+    async function loadAllData() {
+      try {
+        // Load users
+        const usersRes = await fetch(`${API_BASE_URL}/user/getAll`);
+        usersData = await usersRes.json();
+        filteredUsers = [...usersData];
+        
+        // Load annonces
+        const annoncesRes = await fetch(`${API_BASE_URL}/annonces/admin`);
+        annoncesData = await annoncesRes.json();
+        filteredAnnonces = [...annoncesData];
+        
+        // Load abonnements
+        const abonnementsRes = await fetch(`${API_BASE_URL}/abonnement`);
+        abonnementsData = await abonnementsRes.json();
+        filteredAbonnements = [...abonnementsData];
+        
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+        usersData = [];
+        filteredUsers = [];
+        annoncesData = [];
+        filteredAnnonces = [];
+        abonnementsData = [];
+        filteredAbonnements = [];
+      }
+    }
+
+    // Compute and render total stats
+    function renderStats() {
+      const totalUsers = usersData.length;
+      const totalAnnonces = annoncesData.length;
+      const totalAbonnements = abonnementsData.length;
+      totalUsersElement.textContent = totalUsers;
+      totalAnnoncesElement.textContent = totalAnnonces;
+      totalAbonnementsElement.textContent = totalAbonnements;
+    }
+
+    // Filter users based on search input
+    function filterUsers() {
+      const searchTerm = searchUsersInput.value.toLowerCase();
+      if (!searchTerm) {
+        filteredUsers = [...usersData];
+      } else {
+        filteredUsers = usersData.filter(user => 
+          user.fullname.toLowerCase().includes(searchTerm) ||
+          user.email.toLowerCase().includes(searchTerm) ||
+          user.phone.toLowerCase().includes(searchTerm) ||
+          user.role.toLowerCase().includes(searchTerm) ||
+          user.id.toString().includes(searchTerm))
+      }
+      renderUsersTable();
+    }
+
+    // Filter annonces based on search input
+    function filterAnnonces() {
+      const searchTerm = searchAnnoncesInput.value.toLowerCase();
+      if (!searchTerm) {
+        filteredAnnonces = [...annoncesData];
+      } else {
+        filteredAnnonces = annoncesData.filter(annonce => 
+          annonce.titre.toLowerCase().includes(searchTerm) ||
+          annonce.wilaya.toLowerCase().includes(searchTerm) ||
+          annonce.commune.toLowerCase().includes(searchTerm) ||
+          annonce.prix.toString().includes(searchTerm) ||
+          annonce.id.toString().includes(searchTerm) ||
+          (annonce.user && annonce.user.fullname.toLowerCase().includes(searchTerm)))
+      }
+      renderAnnoncesTable();
+    }
+
+    // Filter abonnements based on search input
+    function filterAbonnements() {
+      const searchTerm = searchAbonnementsInput.value.toLowerCase();
+      if (!searchTerm) {
+        filteredAbonnements = [...abonnementsData];
+      } else {
+        filteredAbonnements = abonnementsData.filter(abonnement => 
+          abonnement.id.toString().includes(searchTerm) ||
+          abonnement.price.toString().includes(searchTerm) ||
+          abonnement.duree.toString().includes(searchTerm) ||
+          abonnement.payment_type.toLowerCase().includes(searchTerm) ||
+          (abonnement.user && abonnement.user.fullname.toLowerCase().includes(searchTerm)))
+      }
+      renderAbonnementsTable();
+    }
+
+    // Render users table rows
+    function renderUsersTable() {
+      usersTableBody.innerHTML = '';
+      filteredUsers.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.id}</td>
+          <td>${user.fullname}</td>
+          <td>${user.email}</td>
+          <td>${user.phone}</td>
+          <td><span class="status ${user.role}">${user.role === 'admin' ? 'مدير' : 'مستخدم'}</span></td>
+          <td>
+            <button class="action-btn edit-btn" data-id="${user.id}">
+              <i class="fas fa-edit"></i> تعديل
+            </button>
+            <button class="action-btn delete-btn" data-id="${user.id}" data-type="user">
+              <i class="fas fa-trash"></i> حذف
+            </button>
+          </td>
+        `;
+        usersTableBody.appendChild(tr);
+      });
+
+      document.querySelectorAll('.edit-btn').forEach(el =>
+        el.addEventListener('click', () => showEditModal(el.dataset.id))
+      );
+      document.querySelectorAll('.delete-btn').forEach(el =>
+        el.addEventListener('click', () => showDeleteModal(el.dataset.id, el.dataset.type))
+      );
+    }
+
+    // Render annonces table rows with correct image paths
+    function renderAnnoncesTable() {
+      annoncesTableBody.innerHTML = '';
+      filteredAnnonces.forEach(annonce => {
+        const tr = document.createElement('tr');
+        const firstMedia = annonce.medias && annonce.medias.length > 0 ? annonce.medias[0] : null;
+        // Determine media URL based on type
+        let mediaElement = '';
+        if (firstMedia) {
+
+          if (firstMedia.image) {            
+            mediaElement = `<img src="${API_BASE_URL}/images/${firstMedia.path}" class="thumbnail" alt="Annonce Image">`;
+          } else {
+            mediaElement = `
+              <div class="video-thumbnail">
+                <i class="fas fa-video"></i>
+              </div>
+            `;
+          }
+        } else {
+          mediaElement = '<img src="https://via.placeholder.com/50" class="thumbnail" alt="No Image">';
+        }
+
+
+        tr.innerHTML = `
+          <td>${annonce.id}</td>
+          <td>${mediaElement}</td>
+          <td>${annonce.titre}</td>
+          <td>${annonce.prix} دج</td>
+          <td>${annonce.wilaya}</td>
+          <td>${annonce.commune}</td>
+          <td>${annonce.user ? annonce.user.fullname : 'غير معروف'}</td>
+          <td>${annonce.telephone}</td>
+          <td><span class="status ${annonce.status}">${getAnnonceStatusText(annonce.status)}</span></td>
+          <td>
+            ${annonce.status === 'attente' ? `
+              <button class="action-btn accept-btn annonce-accept" data-id="${annonce.id}">
+                <i class="fas fa-check"></i> قبول
+              </button>
+              <button class="action-btn reject-btn annonce-reject" data-id="${annonce.id}">
+                <i class="fas fa-times"></i> رفض
+              </button>
+            ` : ''}
+            <button class="action-btn delete-btn annonce-delete" data-id="${annonce.id}" data-type="annonce">
+              <i class="fas fa-trash"></i> حذف
+            </button>
+          </td>
+        `;
+        annoncesTableBody.appendChild(tr);
+      });
+
+     annoncesTableBody.querySelectorAll('.annonce-accept').forEach(el =>
+    el.addEventListener('click', () => showAnnonceStatusModal(el.dataset.id, 'accepte'))
+  );
+
+  annoncesTableBody.querySelectorAll('.annonce-reject').forEach(el =>
+    el.addEventListener('click', () => showAnnonceStatusModal(el.dataset.id, 'refuse'))
+  );
+
+  annoncesTableBody.querySelectorAll('.annonce-delete').forEach(el =>
+    el.addEventListener('click', () => showDeleteModal(el.dataset.id, el.dataset.type))
+  );
+    }
+
+    // Render abonnements table rows with correct status handling
+    function renderAbonnementsTable() {
+      abonnementsTableBody.innerHTML = '';
+      filteredAbonnements.forEach(abonnement => {
+        console.log(abonnement);
+        
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${abonnement.id}</td>
+          <td>${abonnement.user ? abonnement.user.fullname : 'غير معروف'}</td>
+          <td>${abonnement.date_debut ? new Date(abonnement.date_debut).toLocaleDateString() : '---'}</td>
+          <td>${abonnement.date_fin ? new Date(abonnement.date_fin).toLocaleDateString() : '---'}</td>
+          <td>${abonnement.duree}</td>
+          <td>${abonnement.price} دج</td>
+          <td>${getPaymentTypeText(abonnement.payment_type)}</td>
+          <td><span class="status ${abonnement.status}">${getStatusText(abonnement.status)}</span></td>
+          <td>
+            ${abonnement.status === 'attente' ? `
+              <button class="action-btn accept-btn abonnement-accept" data-id="${abonnement.id}">
+                <i class="fas fa-check"></i> قبول
+              </button>
+              <button class="action-btn reject-btn abonnement-reject" data-id="${abonnement.id}">
+                <i class="fas fa-times"></i> رفض
+              </button>
+            ` : ''}
+          </td>
+        `;
+        abonnementsTableBody.appendChild(tr);
+      });
+
+      abonnementsTableBody.querySelectorAll('.abonnement-accept').forEach(el =>
+    el.addEventListener('click', () => updateAbonnementStatus(el.dataset.id, 'succes'))
+  );
+
+  abonnementsTableBody.querySelectorAll('.abonnement-reject').forEach(el =>
+    el.addEventListener('click', () => updateAbonnementStatus(el.dataset.id, 'annule'))
+  );
+    }
+
+    // Helper function to get status text
+    function getStatusText(status) {
+      switch(status) {
+        case 'succes': return 'مقبول';
+        case 'attente': return 'في الانتظار';
+        case 'annule': return 'مرفوض';
+        default: return status;
+      }
+    }
+
+    function getAnnonceStatusText(status) {
+      switch(status) {
+        case 'accepte': return 'مقبول';
+        case 'attente': return 'في الانتظار';
+        case 'refuse': return 'مرفوض';
+        default: return status;
+      }
+    }
+
+    // Helper function to get payment type text
+    function getPaymentTypeText(paymentType) {
+      switch(paymentType) {
+        case 'virement': return 'تحويل بنكي';
+        case 'carte': return 'بطاقة ائتمان';
+        case 'espece': return 'نقدي';
+        default: return paymentType;
+      }
+    }
+
+    // Update abonnement status - NEW FUNCTION
+    async function updateAbonnementStatus(id, status) {
+      const abonnement = abonnementsData.find(a => a.id == id);
+      if (!abonnement) {
+        return;
+      }
+
+      // For accepted abonnements, calculate dates
+      let payload = { status };
+      if (status === 'succes') {
+        const dateDebut = new Date();
+        const dateFin = new Date();
+        dateFin.setMonth(dateFin.getMonth() + parseInt(abonnement.duree));
+        payload.date_debut = dateDebut.toISOString();
+        payload.date_fin = dateFin.toISOString();
+      }
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/abonnement/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        if (res.ok) {
+          await loadAllData();
+          renderStats();
+          renderAbonnementsTable();
+        } else {
+          throw new Error('Failed to update abonnement status');
+        }
+      } catch (err) {
+        console.error('Update abonnement status failed:', err);
+        alert('فشل في تحديث حالة الاشتراك. الرجاء المحاولة مرة أخرى.');
+      }
+    }
+
+    // Show modals
+    function showAddModal() {
+      modalTitle.textContent = 'إضافة مستخدم';
+      userIdInput.value = '';
+      fullnameInput.value = emailInput.value = phoneInput.value = '';
+      passwordInput.required = true;
+      roleInput.value = 'user';
+      userModal.style.display = 'flex';
+    }
+
+    function showEditModal(id) {
+      const user = usersData.find(u => u.id == id);
+      if (!user) return;
+      modalTitle.textContent = 'تعديل المستخدم';
+      userIdInput.value = user.id;
+      fullnameInput.value = user.fullname;
+      emailInput.value = user.email;
+      phoneInput.value = user.phone;
+      passwordInput.required = false;
+      roleInput.value = user.role;
+      userModal.style.display = 'flex';
+    }
+
+    function showDeleteModal(id, type) {
+      deleteItemIdInput.value = id;
+      deleteItemTypeInput.value = type;
+      
+      if (type === 'user') {
+        deleteModalMessage.textContent = 'هل أنت متأكد أنك تريد حذف هذا المستخدم؟';
+      } else if (type === 'annonce') {
+        deleteModalMessage.textContent = 'هل أنت متأكد أنك تريد حذف هذا الإعلان؟';
+      }
+      
+      deleteModal.style.display = 'flex';
+    }
+
+    function showAnnonceStatusModal(id, defaultStatus) {
+      annonceIdInput.value = id;
+      annonceStatusInput.value = defaultStatus;
+      annonceStatusModal.style.display = 'flex';
+    }
+
+    // Save (add or update) user
+    async function saveUser() {
+      const id = userIdInput.value;
+      const payload = {
+        fullname: fullnameInput.value,
+        email: emailInput.value,
+        phone: phoneInput.value,
+        role: roleInput.value
+      };
+      if (passwordInput.value) payload.password = passwordInput.value;
+
+      const url = id
+        ? `${API_BASE_URL}/user/${id}`
+        : `${API_BASE_URL}/user/signup`;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        await res.json();
+        await loadAllData();
+        renderStats();
+        renderUsersTable();
+        userModal.style.display = 'none';
+      } catch (err) {
+        console.error('Save user failed:', err);
+        alert('فشل في حفظ المستخدم. الرجاء المحاولة مرة أخرى.');
+      }
+    }
+
+    // Delete item (user or annonce)
+    async function deleteItem() {
+      const id = deleteItemIdInput.value;
+      const type = deleteItemTypeInput.value;
+      
+      try {
+        let url = '';
+        if (type === 'user') {
+          url = `${API_BASE_URL}/user/${id}`;
+        } else if (type === 'annonce') {
+          url = `${API_BASE_URL}/annonces/${id}`;
+        } else {
+          throw new Error('Invalid item type');
+        }
+
+        const res = await fetch(url, { method: 'DELETE' });
+        
+        if (res.ok) {
+          await loadAllData();
+          renderStats();
+          
+          if (type === 'user') {
+            renderUsersTable();
+          } else if (type === 'annonce') {
+            renderAnnoncesTable();
+          }
+          
+          deleteModal.style.display = 'none';
+        } else {
+          throw new Error('Failed to delete item');
+        }
+      } catch (err) {
+        console.error('Delete item failed:', err);
+        alert(`فشل في حذف ${type === 'user' ? 'المستخدم' : 'الإعلان'}. الرجاء المحاولة مرة أخرى.`);
+      }
+    }
+
+    // Update annonce status
+    async function updateAnnonceStatus() {
+      const id = annonceIdInput.value;
+      const status = annonceStatusInput.value;
+      
+      try {
+        const res = await fetch(`${API_BASE_URL}/annonces/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        
+        if (res.ok) {
+          await loadAllData();
+          renderStats();
+          renderAnnoncesTable();
+          annonceStatusModal.style.display = 'none';
+        } else {
+          throw new Error('Failed to update status');
+        }
+      } catch (err) {
+        console.error('Update annonce status failed:', err);
+        alert('فشل في تحديث حالة الإعلان. الرجاء المحاولة مرة أخرى.');
+      }
+    }
+
+    // Event listeners for sidebar toggle & modals
+    function setupEventListeners() {
+      // Sidebar toggle
+      menuToggle.addEventListener('click', () => sidebar.classList.toggle('active'));
+      
+      // Tab switching
+      tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const tabId = link.getAttribute('data-tab');
+          
+          // Update active tab
+          tabLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          
+          // Show corresponding content
+          tabContents.forEach(content => content.classList.remove('active'));
+          document.getElementById(`${tabId}Tab`).classList.add('active');
+          
+          // Update page header
+          pageHeader.textContent = link.textContent.trim();
+        });
+      });
+      
+      // User management
+      addUserBtn.addEventListener('click', showAddModal);
+      closeModal.addEventListener('click', () => (userModal.style.display = 'none'));
+      cancelBtn.addEventListener('click', () => (userModal.style.display = 'none'));
+      closeDeleteModal.addEventListener('click', () => (deleteModal.style.display = 'none'));
+      cancelDeleteBtn.addEventListener('click', () => (deleteModal.style.display = 'none'));
+      
+      // Annonce status
+      closeAnnonceStatusModal.addEventListener('click', () => (annonceStatusModal.style.display = 'none'));
+      cancelAnnonceStatusBtn.addEventListener('click', () => (annonceStatusModal.style.display = 'none'));
+      
+      // Abonnement accept/reject
+      closeAbonnementAcceptModal.addEventListener('click', () => (abonnementAcceptModal.style.display = 'none'));
+      cancelAbonnementAcceptBtn.addEventListener('click', () => (abonnementAcceptModal.style.display = 'none'));
+      closeAbonnementRejectModal.addEventListener('click', () => (abonnementRejectModal.style.display = 'none'));
+      cancelAbonnementRejectBtn.addEventListener('click', () => (abonnementRejectModal.style.display = 'none'));
+      
+      // Close modals when clicking outside
+      window.addEventListener('click', e => {
+        if (e.target === userModal) userModal.style.display = 'none';
+        if (e.target === deleteModal) deleteModal.style.display = 'none';
+        if (e.target === annonceStatusModal) annonceStatusModal.style.display = 'none';
+        if (e.target === abonnementAcceptModal) abonnementAcceptModal.style.display = 'none';
+        if (e.target === abonnementRejectModal) abonnementRejectModal.style.display = 'none';
+      });
+      
+      // Form submission
+      userForm.addEventListener('submit', e => {
+        e.preventDefault();
+        saveUser();
+      });
+      
+      // Delete confirmation
+      confirmDeleteBtn.addEventListener('click', deleteItem);
+      
+      // Annonce status change
+      confirmAnnonceStatusBtn.addEventListener('click', updateAnnonceStatus);
+      
+      // Search inputs
+      searchUsersInput.addEventListener('input', filterUsers);
+      searchAnnoncesInput.addEventListener('input', filterAnnonces);
+      searchAbonnementsInput.addEventListener('input', filterAbonnements);
+    }
+  </script>
+</body>
+</html>

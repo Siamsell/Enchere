@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>encheres_dz - البحث في المزادات</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preload" href="fonts/aruf-requa.ttf" as="font" type="font/ttf" crossorigin />
+  <style>
+    /* ---------- Shared Variables & Reset ---------- */
+    :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #4a694a;
+            --light-color: #f5f7f5;
+            --danger-color: #e74c3c;
+            --success-color: #2e7d32;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Tajawal','Segoe UI',sans-serif;
+      background: var(--light-color);
+      color: var(--text-color);
+      display:flex; flex-direction:column;
+      min-height:100vh;
+    }
+
+    /* ---------- AppBar (Navbar) ---------- */
+    .navbar {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 5%; background:var(--white);
+      box-shadow:var(--shadow); position:sticky; top:0; z-index:1000;
+      transition:var(--transition);
+    }
+    
+    .navbar.scrolled {
+      padding: 8px 5%;
+    }
+    
+    .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+            background-color: white;
+            border: 0;
+        }
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .logo img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+    
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .logo-text .main {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    .logo-text .sub {
+        font-size: 12px;
+        color: var(--text-light);
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .add-announce {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: 0 2px 5px rgba(56, 84, 56, 0.3);
+    }
+    
+    .add-announce:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+    
+    .user-profile {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+        border: 2px solid var(--primary-color);
+        transition: var(--transition);
+    }
+    
+    .user-profile:hover {
+        transform: scale(1.05);
+    }
+    
+    .user-profile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* ---------- Drawer (Side‑Menu) ---------- */
+    .menu-item a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        height: 100%;
+    }
+    .side-menu {
+      position:fixed; top:0; right:-320px;
+      width:320px; height:100%; background:var(--white);
+      box-shadow:-2px 0 15px rgba(0,0,0,0.1);
+      z-index:1001; transition:right 0.3s ease-out;
+      padding:25px; overflow-y:auto;
+      display:flex; flex-direction:column;
+      font-family: 'Aruf Requa', sans-serif;
+    }
+    .side-menu.open { right:0; }
+    .side-menu-header {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:25px; padding-bottom:15px;
+      border-bottom:1px solid #eee;
+    }
+    .close-menu {
+      font-size:24px; color:var(--text-light);
+      cursor:pointer; transition:var(--transition);
+    }
+    .close-menu:hover {
+      color:var(--danger-color); transform:rotate(90deg);
+    }
+    .menu-section { margin-bottom:20px; }
+    .menu-section-title {
+      font-size:14px; color:var(--text-light);
+      margin-bottom:10px; text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    .menu-item {
+      padding:12px 15px; border-radius:8px;
+      display:flex; align-items:center; gap:12px;
+      cursor:pointer; transition:var(--transition);
+      margin-bottom:5px;
+    }
+    .menu-item i {
+      width:20px; text-align:center; color:var(--primary-color);
+    }
+    .menu-item:hover {
+      background:#f5f7f5; color:var(--primary-color);
+      transform:translateX(-5px);
+    }
+    .menu-item.active,
+    .menu-item.active i {
+      background:var(--primary-color); color:var(--white);
+    }
+    
+    .language-selector {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+    }
+    
+    .language-btn {
+        flex: 1;
+        background: none;
+        border: 1px solid #ddd;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .language-btn.active {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border-color: var(--primary-color);
+    }
+    
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 25px 0;
+    }
+    
+    .social-links a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f0f2f5;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+        background-color: var(--primary-color);
+        color: var(--white);
+        transform: translateY(-3px);
+    }
+    
+    .contact-info {
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-light);
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .overlay {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.5); backdrop-filter:blur(5px);
+      z-index:1000; opacity:0; visibility:hidden;
+      transition:var(--transition);
+    }
+    .overlay.active { opacity:1; visibility:visible; }
+
+    /* ---------- Search Page ---------- */
+    
+    .search-header { text-align:center; margin-bottom:40px; }
+    .search-header h1 {
+      color:var(--primary-color); font-size:2.2rem;
+      margin-bottom:15px; font-weight:700;
+    }
+    .search-header p {
+      color:var(--text-light); font-size:1.1rem;
+      max-width:600px; margin:0 auto;
+    }
+    
+    .search-input {
+      width:100%; padding:18px 60px 18px 20px;
+      font-size:1.1rem; border:2px solid #e0e0e0;
+      border-radius:50px; box-shadow:var(--shadow);
+      background:var(--white); outline:none;
+      transition:var(--transition); text-align:right;
+    }
+    .search-input:focus {
+      border-color:var(--primary-color);
+      box-shadow:0 0 0 4px rgba(56,84,56,0.2);
+    }
+    .search-button {
+      position:absolute; left:10px; top:50%;
+      transform:translateY(-50%);
+      background:var(--primary-color); border:none;
+      border-radius:50%; width:48px; height:48px;
+      cursor:pointer; display:flex; align-items:center;
+      justify-content:center; transition:var(--transition);
+    }
+    .search-button:hover {
+      background:var(--secondary-color);
+      transform:translateY(-50%) scale(1.05);
+    }
+    .search-icon { color:var(--white); font-size:18px; }
+
+    .suggestions-container {
+      position:absolute; top:100%; right:0; left:0;
+      background:#f5f7f5; border:1px solid #e0e5e0;
+      border-radius:15px; box-shadow:var(--shadow);
+      z-index:1000; max-height:400px; overflow-y:auto;
+      display:none; margin-top:10px;
+    }
+    .suggestions-container.show {
+      display:block; animation:fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(-10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .suggestion-item {
+      padding:15px 20px; border-bottom:1px solid #f0f0f0;
+      display:flex; align-items:center; background:#fff;
+      border-radius:8px; margin:3px 6px; cursor:pointer;
+      transition:var(--transition);
+    }
+    .suggestion-item:last-child { border-bottom:none; }
+    .suggestion-item:hover {
+      background:#f8f9ff; padding-right:25px;
+    }
+    .suggestion-content { flex:1; }
+    .suggestion-title {
+      font-weight:600; color:var(--text-color);
+      margin-bottom:5px;
+    }
+    .suggestion-details {
+      display:flex; gap:10px;
+      font-size:0.9rem; color:var(--text-light);
+    }
+    .suggestion-price {
+      color:var(--primary-color); font-weight:bold;
+    }
+    .empty-state {
+      text-align:center; padding:40px 20px;
+      color:var(--text-light);
+    }
+    .empty-state-icon {
+      font-size:50px; color:#ddd; margin-bottom:15px;
+    }
+
+    .results-container {
+      display:none; background:var(--white);
+      border-radius:15px; padding:30px;
+      box-shadow:var(--shadow); margin-top:30px;
+      width:100%;
+    }
+    .results-container.show {
+      display:block; animation:slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .results-header {
+      margin-bottom:20px; padding-bottom:15px;
+      border-bottom:2px solid #f0f0f0;
+      display:flex; justify-content:space-between;
+      align-items:center;
+    }
+    .results-count {
+      color:var(--text-light); font-size:1.1rem;
+    }
+    .result-item {
+      display:flex; gap:20px; padding:20px;
+      border-bottom:1px solid #f0f0f0;
+      border-radius:10px; margin-bottom:15px;
+      cursor:pointer; transition:var(--transition);
+    }
+    .result-item:hover {
+      background:#f8f9ff; transform:translateX(-5px);
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+    .result-image {
+      flex-shrink:0; width:120px; height:120px;
+      border-radius:8px; object-fit:cover;
+    }
+    .result-info { flex:1; }
+    .result-title {
+      font-size:1.3rem; font-weight:600;
+      color:var(--primary-color); margin-bottom:10px;
+    }
+    .result-price {
+      font-size:1.2rem; font-weight:bold;
+      color:var(--accent-color); margin-bottom:8px;
+    }
+    .result-meta {
+      display:flex; gap:15px; margin-bottom:8px;
+    }
+    .result-location, .result-date {
+      display:flex; align-items:center; gap:5px;
+      font-size:0.95rem; color:var(--text-light);
+    }
+    .result-location i { color:var(--primary-color); }
+    .result-date i    { color:var(--text-light); }
+    .result-description {
+      font-size:0.95rem; color:var(--text-light);
+      display:-webkit-box; -webkit-line-clamp:2;
+      -webkit-box-orient:vertical; overflow:hidden;
+    }
+
+    .loading {
+      text-align:center; padding:20px;
+      color:var(--text-light);
+    }
+    .loading::after {
+      content:''; width:20px; height:20px;
+      border:2px solid #f3f3f3;
+      border-top:2px solid var(--primary-color);
+      border-radius:50%; display:inline-block;
+      animation:spin 1s linear infinite;
+      margin-right:10px;
+    }
+    @keyframes spin {
+      from { transform:rotate(0deg); }
+      to   { transform:rotate(360deg); }
+    }
+
+    /* ---------- Footer ---------- */
+   
+.custom-footer {
+    background-color: var(--dark-color);
+    color: rgb(255, 255, 255);
+    padding: 8px 5% 8px;
+    font-family: 'Aruf Requa', 'Tajawal', sans-serif;
+    direction: rtl;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+}
+
+.right-column {
+    text-align: right;
+}
+
+.center-column {
+    text-align: center;
+}
+
+.left-column {
+    text-align: left;
+}
+
+.footer-logo img {
+    width: 300px;
+    height: auto;
+    border-radius: 20px;
+    margin-right: 25px;
+
+}
+
+.usage-terms {
+    color: #ffffffd4;
+    font-size: 14px;
+    margin-left:75px;
+    margin-bottom:25px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.footer-title {
+    color: var(--accent-color);
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color:#ee9e13;
+}
+#aa:hover{
+      color:#ee9e13;
+}
+#bb:hover{
+      color:#ee9e13;
+}
+#cc:hover{
+      color:#ee9e13;
+}
+#aa {
+    color: rgb(255, 255, 255);
+    margin-top: 40px; 
+    margin-right: 15px; 
+    font-size: 15px;
+    display: block;
+}
+
+#bb {
+    color: #ffffff;
+    margin-top: 40px; 
+    font-size: 15px;
+    display: block; 
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-left: 90px;
+     justify-content: center;
+    margin-top: 60px;
+}
+
+.social-icons a {
+    color: var(--white);
+    background-color: rgb(0, 0, 0);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.copyright-notice {
+    text-align: center;
+    color: #ffffffd5;
+    font-size: 15px;
+    padding-top: 18px;
+    border-top: 0.5px solid #ee9e13;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1;
+}
+
+/* ---------- Search Page ---------- */
+.search-container {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 10vh;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-box {
+  position: relative;
+  margin: 0 auto 30px;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .search-container {
+    padding: 0 5%;
+    width: 90%;
+    margin: 20px auto;
+  }
+  
+  .search-header h1 { 
+    font-size: 1.8rem; 
+  }
+  
+  .search-input { 
+    padding: 15px 15px 15px 15px; 
+    font-size: 1rem;
+  }
+  
+  .search-button { 
+    width: 42px; 
+    height: 42px; 
+  }
+  
+  .result-item { 
+    flex-direction: column; 
+    gap: 15px; 
+  }
+  
+  .result-image { 
+    width: 100%; 
+    height: 180px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    padding: 0;
+    width: 90%;
+  }
+  
+  .search-header { 
+    margin-bottom: 25px; 
+  }
+  
+  .search-header h1 { 
+    font-size: 1.5rem; 
+  }
+  
+  .search-header p { 
+    font-size: 1rem; 
+  }
+  
+  .results-header { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 10px; 
+  }
+  
+  .result-title { 
+    font-size: 1.1rem; 
+  }
+  
+  .result-price { 
+    font-size: 1rem; 
+  }
+  
+  .result-meta { 
+    flex-direction: column; 
+    gap: 5px; 
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- AppBar -->
+  <header class="navbar">
+    <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    <div class="logo">
+        <img src="logo.png" alt="encheres_dz Logo">
+        <div class="logo-text">
+            <span class="main">encheres_dz</span>
+            <span class="sub">المزادات والإعلانات الجزائرية</span>
+        </div>
+    </div>
+    <div class="user-actions">
+        <button class="add-announce" id="addAnnounceBtn" title="إضافة إعلان جديد"><i class="fas fa-plus"></i></button>
+        <div class="user-profile" id="userProfileBtn" title="حسابك" style="display: none;">
+            <img src="https://i.pinimg.com/1200x/bb/e3/02/bbe302ed8d905165577c638e908cec76.jpg" alt="Profil">
+        </div>
+    </div>
+  </header>
+
+  <!-- Drawer -->
+  <div class="side-menu" id="sideMenu">
+    <div class="side-menu-header" >
+        <h3> القائمة الرئيسية</h3>
+        <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+    </div>
+    
+    <div class="menu-section">
+        <div class="menu-section-title">اللغة</div>
+        <div class="language-selector">
+           <button class="language-btn active" id="arabicBtn">
+                <i class="fas fa-language"></i> العربية
+            </button>
+            <button class="language-btn" id="frenchBtn">
+                <i class="fas fa-language"></i> Français
+            </button>
+        </div>
+    </div>
+    
+    <div class="menu-section">
+        <div class="menu-section-title">تصفح</div>
+        <div class="menu-item" id="home_btn">
+            <i class="fas fa-home"></i><a>الصفحة الرئيسية</a> 
+        </div>
+        <div class="menu-item active" id="searchMenuItem">
+            <i class="fas fa-search"></i> البحث
+        </div>
+        <div class="menu-item" id="add_pub_menu">
+            <i class="fas fa-plus-circle"></i> إضافة إعلان
+        </div>
+    </div>
+        
+    <div class="menu-section">
+        <div class="menu-section-title">حسابك</div>
+        <div class="menu-item" id="loginMenuItem">
+            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+        </div>
+        <div class="menu-item" id="registerMenuItem">
+            <i class="fas fa-user-plus"></i> إنشاء حساب
+        </div>
+        <div class="menu-item" id="my_account" style="display: none;">
+            <i class="fas fa-user"></i> حسابي
+        </div>
+        <div class="menu-item" id="payment_menu" style="display: none;">
+            <i class="fas fa-crown"></i> اشتراكاتي
+        </div>
+        <div class="menu-item" style="display:none;" id="logout_btn">
+            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </div>
+    </div>
+    
+    <div class="menu-section">
+        <div class="menu-section-title">المساعدة</div>
+        <div class="menu-item">
+            <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi">الشروط والأحكام</a>
+        </div>
+    </div>
+    
+    <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <div class="contact-info">
+        <p><i class="fas fa-envelope"></i>  ENCHERES-DZ@HOTMAIL.COM</p>
+        <p><i class="fas fa-phone"></i>  0550875781</p>
+    </div>
+</div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Search Page Content -->
+  <div class="search-container">
+    <div class="search-header">
+      <h1>ابحث في المزادات والإعلانات</h1>
+      <p>ابحث عن السلع والخدمات التي تريدها في جميع أنحاء الجزائر</p>
+    </div>
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن سيارات، عقارات، أجهزة..." autocomplete="off">
+      <button class="search-button" id="searchButton"><i class="fas fa-search search-icon"></i></button>
+      <div class="suggestions-container" id="suggestionsContainer">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-state-icon"><i class="fas fa-search"></i></div>
+          <h3>ابدأ كتابة للبحث</h3>
+          <p>سيظهر هنا اقتراحات البحث أثناء الكتابة</p>
+        </div>
+      </div>
+    </div>
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <div class="results-count" id="resultsCount">0 نتائج</div>
+      </div>
+      <div id="resultsContent"></div>
+    </div>
+  </div>
+
+  <footer class="custom-footer">
+    <div class="footer-container">
+        <!-- Colonne de droite - Logo et texte -->
+        <div class="footer-column right-column">
+            <div class="footer-logo">
+                <img src="/logo.png" alt="encheres_dz Logo">
+            </div>
+            <p class="usage-terms">
+                إستعمال هذا الموقع يستوجب القبول بجميع الشروط العامة و القوانين المنظمة له
+            </p>
+        </div>
+        
+        <!-- Colonne centrale - Liens -->
+        <div class="footer-column center-column">
+           
+            <ul class="footer-links">
+                <li><a id="signup_footer" href="https://enchere-dz.com/signup">انشاء حساب</a></li>
+                <li><a  id="aa" href="https://enchere-dz.com/ajouter-annonce">للإعلان في أونشار ديزاد</a></li>
+                <li><a  id="aa" href="#">كيف تضيف إعلان</a></li>
+            </ul>
+        </div>
+        
+        <!-- Colonne de gauche - Conditions et réseaux sociaux -->
+        <div class="footer-column left-column">
+              <ul class="footer-links">
+                <li><a id="bb" href="https://enchere-dz.com/loi" >الشروط العامة للإستخدام</a></li>
+                <li><a id="bb" href="#">طرق الدفع</a></li>
+                <li><a id="bb" href="tel:+213550875781">
+                    إتصل بنا: <span style="font-weight:bold;">0550875781</span>
+                </a></li>
+            </ul>
+            <div class="social-icons" id="cc">
+                <a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mention légale en bas -->
+    <div class="copyright-notice">
+        الموقع و الشعار و الألوان علامة تجارية مسجلة تخضع للحماية بموجب حقوق النشر و قانون العلامات التجارية و أي حق آخر للملكية الفكرية
+    </div>
+</footer>
+ 
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const arabicBtn = document.getElementById('arabicBtn');
+    const frenchBtn = document.getElementById('frenchBtn');
+    
+    if (currentPage === 'recherchefr.html') {
+        arabicBtn.classList.remove('active');
+        frenchBtn.classList.add('active');
+    } else {
+        arabicBtn.classList.add('active');
+        frenchBtn.classList.remove('active');
+    }
+});
+
+const signup_footer = document.getElementById('signup_footer');
+
+if (sessionStorage.getItem("_key")) {
+    signup_footer.style.display = "none";
+} else {
+    
+}
+
+// Language button handling
+const arabicBtn = document.getElementById('arabicBtn');
+const frenchBtn = document.getElementById('frenchBtn');
+
+arabicBtn.addEventListener('click', () => {
+});
+
+frenchBtn.addEventListener('click', () => {
+    window.location.href = "?lang=fr";
+});
+
+// Menu functionality
+let isLoggedIn = false;
+const user = sessionStorage.getItem("_key");
+
+const menuBtn = document.querySelector('.menu-btn');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
+const sideMenu = document.getElementById('sideMenu');
+const overlay = document.getElementById('overlay');
+const addAnnounceBtn = document.querySelector('#addAnnounceBtn');
+const addPubMenu = document.getElementById('add_pub_menu');
+const userProfileBtn = document.getElementById('userProfileBtn');
+const logoutBtn = document.getElementById("logout_btn");
+const myAccount = document.getElementById("my_account");
+const loginMenuItem = document.querySelector('#loginMenuItem');
+const registerMenuItem = document.querySelector('#registerMenuItem');
+const homeMenuItem = document.getElementById('home_btn');
+const searchMenuItem = document.getElementById('searchMenuItem');
+const paymentMenuItem = document.getElementById('payment_menu');
+
+// Set initial auth state
+if (user) {
+    isLoggedIn = true;
+    if (logoutBtn) logoutBtn.style.display = "";
+    if (myAccount) myAccount.style.display = ""
+    if (userProfileBtn) userProfileBtn.style.display = ""
+    if (loginMenuItem) loginMenuItem.style.display = "none"
+    if (registerMenuItem) registerMenuItem.style.display = "none"
+    if (paymentMenuItem) paymentMenuItem.style.display = ""
+}
+
+ const myAbonnemnt = document.getElementById('payment_menu');
+
+       myAccount.addEventListener('click', () => {
+            closeMenu()
+            setTimeout(() => {
+                const user = sessionStorage.getItem("_profile")
+                const id = JSON.parse(user).id;
+                window.location.href = "https://enchere-dz.com/profile/"+id+"";
+            }, 300); 
+        });
+
+         myAbonnemnt.addEventListener('click', () => {
+            closeMenu()
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/mon-abonnement";
+            }, 300); 
+        });
+
+// Scroll effect for navbar
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        document.querySelector('.navbar').classList.add('scrolled');
+    } else {
+        document.querySelector('.navbar').classList.remove('scrolled');
+    }
+});
+
+// Toggle drawer
+function toggleDrawer() {
+    sideMenu.classList.toggle('open');
+    overlay.classList.toggle('active');
+}
+
+menuBtn.addEventListener('click', () => {
+    sideMenu.classList.add('open');
+    overlay.classList.add('active');
+});
+
+closeMenuBtn.addEventListener('click', () => {
+    closeMenu();
+});
+
+overlay.addEventListener('click', () => {
+    closeMenu();
+});
+
+function closeMenu() {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('active');
+}
+
+// Logout functionality
+if (logoutBtn) {
+    logoutBtn.onclick = function(e) {
+        closeMenu();
+        sessionStorage.removeItem("_key");
+        window.location.reload();
+    }
+}
+
+// Navigation handling
+function navigateAfterClose(url) {
+    closeMenu();
+    setTimeout(() => {
+        window.location.href ="https://enchere-dz.com"+ url;
+    }, 300);
+}
+
+if (loginMenuItem) {
+    loginMenuItem.addEventListener('click', () => {
+        navigateAfterClose('/login');
+    });
+}
+
+if (registerMenuItem) {
+    registerMenuItem.addEventListener('click', () => {
+        navigateAfterClose('/signup');
+    });
+}
+
+if (searchMenuItem) {
+    searchMenuItem.addEventListener('click', () => {
+        navigateAfterClose('/recherche');
+    });
+}
+
+if (homeMenuItem) {
+    homeMenuItem.addEventListener('click', () => {
+        navigateAfterClose('/');
+    });
+}
+
+// Add announcement functionality
+function addAnnonce() {
+    if (isLoggedIn) {
+        window.location.href = "/ajouter-annonce";
+    } else {
+        window.location.href = "/login";
+    }
+}
+
+if (addAnnounceBtn) {
+    addAnnounceBtn.addEventListener('click', addAnnonce);
+}
+
+if (addPubMenu) {
+    addPubMenu.addEventListener('click', () => {
+        closeMenu();
+        setTimeout(() => {
+            addAnnonce();
+        }, 300);
+    });
+}
+
+// User profile handling
+ if (userProfileBtn) {
+      userProfileBtn.addEventListener('click', () => {
+        if (isLoggedIn) {
+            const user = sessionStorage.getItem("_profile")
+            const id = JSON.parse(user).id;
+            window.location.href = "https://enchere-dz.com/profile/"+id+"";
+        } else {
+          window.location.href = "/login";
+        }
+      });
+    }
+
+// Search functionality
+class SearchApp {
+    constructor() {
+        this.searchInput = document.getElementById('searchInput');
+        this.searchButton = document.getElementById('searchButton');
+        this.suggestionsContainer = document.getElementById('suggestionsContainer');
+        this.resultsContainer = document.getElementById('resultsContainer');
+        this.resultsContent = document.getElementById('resultsContent');
+        this.resultsCount = document.getElementById('resultsCount');
+        this.searchTimeout = null;
+        this.initEventListeners();
+        this.loadSearchHistory();
+    }
+
+    initEventListeners() {
+        this.searchInput.addEventListener('input', e => this.handleInputChange(e.target.value));
+        this.searchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.performSearch(this.searchInput.value);
+            }
+        });
+        this.searchButton.addEventListener('click', () => this.performSearch(this.searchInput.value));
+        this.searchInput.addEventListener('focus', () => {
+            if (!this.searchInput.value.trim()) this.showSearchHistory();
+        });
+        document.addEventListener('click', e => {
+            if (!this.searchInput.contains(e.target) && !this.suggestionsContainer.contains(e.target)) {
+                this.hideSuggestions();
+            }
+        });
+    }
+
+    handleInputChange(query) {
+        clearTimeout(this.searchTimeout);
+        const q = query.trim();
+        if (!q) return this.showSearchHistory();
+        if (q.length < 2) return this.hideSuggestions();
+        this.searchTimeout = setTimeout(() => this.fetchSuggestions(q), 300);
+    }
+
+    async fetchSuggestions(q) {
+        this.suggestionsContainer.innerHTML = '<div class="loading">جاري البحث...</div>';
+        this.suggestionsContainer.classList.add('show');
+        try {
+            const res = await fetch(`/api/annonces/suggest?q=${encodeURIComponent(q)}`, { method: 'POST' });
+            const items = await res.json();
+            this.displaySuggestions(items);
+        } catch {
+            this.hideSuggestions();
+        }
+    }
+
+    displaySuggestions(items) {
+        if (!items.length) {
+            this.suggestionsContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon"><i class="fas fa-search"></i></div>
+                    <h3>لا توجد نتائج</h3>
+                    <p>حاول استخدام كلمات بحث مختلفة</p>
+                </div>`;
+        } else {
+            this.suggestionsContainer.innerHTML = items.map(item => `
+                <div class="suggestion-item">
+                    <div class="suggestion-content">
+                        <div class="suggestion-title">${item.titre}</div>
+                        <div class="suggestion-details">
+                            ${item.prix ? `<span class="suggestion-price">${new Intl.NumberFormat('ar-DZ').format(item.prix)} دج</span>` : ''}
+                            ${item.commune ? `<span>• ${item.commune}</span>` : ''}
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+            `).join('');
+            this.suggestionsContainer.querySelectorAll('.suggestion-item').forEach((el, idx) => {
+                el.addEventListener('click', () => location.href = `/annonce/${items[idx].id}`);
+            });
+        }
+    }
+
+    async performSearch(q) {
+        const query = q.trim();
+        if (query.length < 2) return;
+        this.hideSuggestions();
+        this.resultsContainer.classList.add('show');
+        this.resultsContent.innerHTML = '<div class="loading">جاري البحث...</div>';
+        try {
+            const res = await fetch(`/api/annonces/suggest?q=${encodeURIComponent(query)}`, { method: 'POST' });
+            const results = await res.json();
+            this.displaySearchResults(results, query);
+        } catch {
+            this.resultsContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3>حدث خطأ أثناء البحث</h3>
+                    <p>الرجاء المحاولة مرة أخرى لاحقاً</p>
+                </div>`;
+        }
+    }
+
+    displaySearchResults(results, query) {
+        this.resultsCount.textContent = `${results.length} نتيجة لـ "${query}"`;
+        if (!results.length) {
+            this.resultsContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon"><i class="fas fa-search"></i></div>
+                    <h3>لا توجد نتائج مطابقة</h3>
+                    <p>حاول تعديل كلمات البحث الخاصة بك</p>
+                </div>`;
+        } else {
+            this.resultsContent.innerHTML = results.map(item => `
+                <div class="result-item">
+                    <img src="${item.medias?.[0]?.path ? `/api/images/${item.medias[0].path}` : 'https://via.placeholder.com/300'}"
+                         alt="${item.titre}" class="result-image">
+                    <div class="result-info">
+                        <h3 class="result-title">${item.titre}</h3>
+                        <div class="result-price">${item.prix ? `${new Intl.NumberFormat('ar-DZ').format(item.prix)} دينار جزائري` : 'السعر غير محدد'}</div>
+                        <div class="result-meta">
+                            <div class="result-location"><i class="fas fa-map-marker-alt"></i>${item.commune || 'غير محدد'}</div>
+                            <div class="result-date"><i class="far fa-clock"></i>${new Intl.DateTimeFormat('ar-DZ',{day:'numeric',month:'long',year:'numeric'}).format(new Date(item.date_debut))}</div>
+                        </div>
+                        <p class="result-description">${item.description || 'لا يوجد وصف متاح'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    showSearchHistory() {
+        const history = JSON.parse(localStorage.getItem('searchHistory')||'[]').slice(0,5);
+        if (!history.length) {
+            this.suggestionsContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon"><i class="fas fa-history"></i></div>
+                    <h3>لا يوجد سجل بحث</h3>
+                    <p>سيتم حفظ عمليات البحث التي تقوم بها هنا</p>
+                </div>`;
+        } else {
+            this.suggestionsContainer.innerHTML = history.map(q => `
+                <div class="suggestion-item">
+                    <div class="suggestion-content"><div class="suggestion-title">${q}</div></div>
+                    <i class="fas fa-history"></i>
+                </div>
+            `).join('');
+            this.suggestionsContainer.querySelectorAll('.suggestion-item').forEach((el, idx) => {
+                el.addEventListener('click', () => {
+                    this.searchInput.value = history[idx];
+                    this.performSearch(history[idx]);
+                });
+            });
+        }
+        this.suggestionsContainer.classList.add('show');
+    }
+
+    hideSuggestions() {
+        this.suggestionsContainer.classList.remove('show');
+    }
+
+    loadSearchHistory() {
+        if (!this.searchInput.value.trim()) {
+            setTimeout(() => this.showSearchHistory(), 500);
+        }
+    }
+}
+
+// Initialize search app
+new SearchApp();
+  </script>
+</body>
+</html>

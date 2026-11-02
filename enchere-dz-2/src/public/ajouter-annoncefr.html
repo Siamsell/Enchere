@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une annonce - encheres_dz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
+    <style>
+        /* Utilisation des mêmes variables CSS que la page principale */
+        :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #2c3e2c;
+            --light-color: #f5f7f5;
+            --danger-color: #e74c3c;
+            --success-color: #2e7d32;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ---------- AppBar (Navbar) ---------- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+            background-color: white;
+            border: 0;
+        }
+
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .logos {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            width: 90%;
+        }
+
+        .logos-text {
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: 20px;
+        }
+
+        .logos img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logos-text .main {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logos-text .sub {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin-inline-end: 1rem;
+        }
+
+        .language-btn {
+            flex: 1;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .auth-btn {
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .login-btn {
+            background: none;
+            color: var(--primary-color);
+        }
+
+        .register-btn {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .register-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* ---------- Drawer (Side‑Menu) ---------- */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100%;
+            background: var(--white);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: left 0.3s ease-out;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-menu {
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-menu:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .menu-item:hover {
+            background: #f5f7f5;
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .menu-item.active,
+        .menu-item.active i {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main content container */
+        .container {
+            padding: 30px 5%;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .add-announce-form {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--accent-color);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-group label.required::after {
+            content: ' *';
+            color: var(--danger-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(56, 84, 56, 0.2);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .date-time-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .date-time-inputs .form-control {
+            flex: 1;
+        }
+        
+        .availability-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .available {
+            background-color: var(--success-color);
+        }
+        
+        .not-available {
+            background-color: var(--danger-color);
+        }
+        
+        /* Upload d'images */
+        .image-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+        
+        .image-upload:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .image-upload i {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .image-upload p {
+            color: var(--text-light);
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        
+        .image-upload small {
+            color: var(--text-light);
+            font-size: 12px;
+        }
+        
+        .uploaded-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .image-preview {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 120px;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(231, 76, 60, 0.8);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        /* Boutons de soumission */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: #f0f7f0;
+        }
+        
+    
+
+        /* Upload Dialog Styles */
+        .upload-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .dialog-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .dialog-buttons {
+            margin-top: 20px;
+        }
+        
+        .success-icon {
+            color: var(--success-color);
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .error-icon {
+            color: var(--danger-color);
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+         .uploaded-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .image-preview {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 150px;
+            background: #f5f5f5;
+            border: 1px dashed #ddd;
+        }
+        
+        .image-preview img,
+        .image-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-preview video {
+            background: #000;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(231, 76, 60, 0.8);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .file-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Validation message */
+        .validation-error {
+            color: var(--danger-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Media counter */
+        .media-counter {
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 3%;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+
+                
+.right-column {
+    text-align: right;
+}
+
+.center-column {
+    text-align: center;
+}
+
+.left-column {
+    text-align: left;
+}
+
+
+.usage-terms {
+    color: #ffffffd4;
+    font-size: 14px;
+    margin-right:75px;
+    margin-bottom:25px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.footer-title {
+    color: var(--accent-color);
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color:#ee9e13;
+}
+#aa:hover{
+      color:#ee9e13;
+}
+#bb:hover{
+      color:#ee9e13;
+}
+#cc:hover{
+      color:#ee9e13;
+}
+
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-right: 90px;
+     justify-content: center;
+    margin-top: 60px;
+}
+
+.social-icons a {
+    color: var(--white);
+    background-color: rgb(0, 0, 0);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+ .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+.copyright-notice {
+    text-align: center;
+    color: #ffffffd5;
+    font-size: 15px;
+    padding-top: 18px;
+    border-top: 0.5px solid #ee9e13;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1;
+}
+.menu-item a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 15px;
+        margin: -12px -15px;
+    }
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .right-column,
+    .center-column,
+    .left-column {
+        text-align: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+}
+@media (max-width: 768px) {
+    .custom-footer {
+        padding: 20px 3%;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .footer-column {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .footer-logo img {
+        margin-left: 0;
+        margin-bottom: 15px;
+    }
+    
+    .usage-terms {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .social-icons {
+        margin-right: 0;
+        justify-content: center;
+    }
+    
+    #aa, #bb {
+        margin-top: 20px;
+        margin-left: 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- AppBar -->
+    <header class="navbar">
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        <div class="logos">
+            <img src="logo.png" alt="encheres_dz Logo" />
+            <div class="logos-text">
+                <span class="main">encheres_dz</span>
+                <span class="sub">Enchères et annonces algériennes</span>
+            </div>
+        </div>
+        <div class="user-actions">
+            
+        </div>
+    </header>
+
+    <!-- Drawer -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>Menu Principal</h3>
+            <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">Langue</div>
+            <div class="language-selector">
+                <button class="language-btn" id="arabicBtn">
+                    <i class="fas fa-language"></i> Arabe
+                </button>
+                <button class="language-btn active" id="frenchBtn">
+                    <i class="fas fa-language"></i> Français
+                </button>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">Naviguer</div>
+            <div class="menu-item" id="home_btn">
+                <i class="fas fa-home"></i> Page d'accueil
+            </div>
+            <div class="menu-item" id="searchMenuItem"><i class="fas fa-search"></i> Rechercher</div>
+            <div class="menu-item active" id="add_pub_menu">
+                <i class="fas fa-plus-circle"></i> Ajouter une annonce
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">Votre compte</div>
+            <div class="menu-item" id="loginMenuItem">
+                <i class="fas fa-sign-in-alt"></i> Se connecter
+            </div>
+            <div class="menu-item" id="registerMenuItem">
+                <i class="fas fa-user-plus"></i> Créer un compte
+            </div>
+            <div class="menu-item" id="my_account">
+                <i class="fas fa-user"></i> Mon compte
+            </div>
+            <div class="menu-item " id="subscriptionMenuItem">
+                <i class="fas fa-crown"></i> Mes abonnements
+            </div>
+            <div class="menu-item" id="logoutMenuItem">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">Aide</div>
+            <div class="menu-item">
+                <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi?lang=fr">Conditions d'utilisation</a>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> ENCHERES-DZ@HOTMAIL.COM</p>
+            <p><i class="fas fa-phone"></i> 0550875781</p>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title"><i class="fas fa-plus-circle"></i> Ajouter une annonce</h1>
+            <a id="back_btn" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+        
+        <form class="add-announce-form" id="announceForm">
+            <!-- Section 1: Informations de base -->
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> Informations de base</h2>
+                
+                    <div class="form-group">
+                        <label for="titre" class="required">Titre de l'annonce</label>
+                        <input type="text" name="titre" id="titre" class="form-control" placeholder="Entrez un titre clair et attractif" required>
+                        <small class="text-muted">Vous pouvez écrire ce que vous voulez sans limite de caractères</small>
+                    </div>
+                    
+                    
+                
+                <div class="form-group">
+                    <label for="description" class="required">Description de l'annonce</label>
+                    <textarea id="description" name="description" class="form-control" placeholder="Décrivez l'article ou le service en détail" required></textarea>
+                    <small class="text-muted">Vous pouvez écrire une description complète et détaillée sans limite de caractères</small>
+                </div>
+            </div>
+            
+            <!-- Section 2: Détails du produit -->
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-tags"></i> Détails de l'article</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="prix" class="required">Prix de départ</label>
+                        <input type="number" id="prix" name="prix" class="form-control" placeholder="Entrez le prix en dinar algérien" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wilaya" class="required">Wilaya</label>
+                        <select id="wilaya" name="wilaya" class="form-control" required>
+  <option value="" disabled selected>اختر الولاية</option>
+  <option value="Adrar / أدرار">Adrar / أدرار</option>
+  <option value="Chlef / الشلف">Chlef / الشلف</option>
+  <option value="Laghouat / الأغواط">Laghouat / الأغواط</option>
+  <option value="Oum El Bouaghi / أم البواقي">Oum El Bouaghi / أم البواقي</option>
+  <option value="Batna / باتنة">Batna / باتنة</option>
+  <option value="Bejaia / بجاية">Bejaia / بجاية</option>
+  <option value="Biskra / بسكرة">Biskra / بسكرة</option>
+  <option value="Bechar / بشار">Bechar / بشار</option>
+  <option value="Blida / البليدة">Blida / البليدة</option>
+  <option value="Bouira / البويرة">Bouira / البويرة</option>
+  <option value="Tamanrasset / تمنراست">Tamanrasset / تمنراست</option>
+  <option value="Tebessa / تبسة">Tebessa / تبسة</option>
+  <option value="Tlemcen / تلمسان">Tlemcen / تلمسان</option>
+  <option value="Tiaret / تيارت">Tiaret / تيارت</option>
+  <option value="Tizi Ouzou / تيزي وزو">Tizi Ouzou / تيزي وزو</option>
+  <option value="Algiers / الجزائر">Algiers / الجزائر</option>
+  <option value="Djelfa / الجلفة">Djelfa / الجلفة</option>
+  <option value="Jijel / جيجل">Jijel / جيجل</option>
+  <option value="Setif / سطيف">Setif / سطيف</option>
+  <option value="Saida / سعيدة">Saida / سعيدة</option>
+  <option value="Skikda / سكيكدة">Skikda / سكيكدة</option>
+  <option value="Sidi Bel Abbes / سيدي بلعباس">Sidi Bel Abbes / سيدي بلعباس</option>
+  <option value="Annaba / عنابة">Annaba / عنابة</option>
+  <option value="Guelma / قالمة">Guelma / قالمة</option>
+  <option value="Constantine / قسنطينة">Constantine / قسنطينة</option>
+  <option value="Medea / المدية">Medea / المدية</option>
+  <option value="Mostaganem / مستغانم">Mostaganem / مستغانم</option>
+  <option value="Msila / المسيلة">Msila / المسيلة</option>
+  <option value="Mascara / معسكر">Mascara / معسكر</option>
+  <option value="Ouargla / ورقلة">Ouargla / ورقلة</option>
+  <option value="Oran / وهران">Oran / وهران</option>
+  <option value="El Bayadh / البيض">El Bayadh / البيض</option>
+  <option value="Illizi / إليزي">Illizi / إليزي</option>
+  <option value="Bordj Bou Arreridj / برج بوعريريج">Bordj Bou Arreridj / برج بوعريريج</option>
+  <option value="Boumerdes / بومرداس">Boumerdes / بومرداس</option>
+  <option value="El Tarf / الطارف">El Tarf / الطارف</option>
+  <option value="Tindouf / تندوف">Tindouf / تندوف</option>
+  <option value="Tissemsilt / تيسمسيلت">Tissemsilt / تيسمسيلت</option>
+  <option value="El Oued / الوادي">El Oued / الوادي</option>
+  <option value="Khenchela / خنشلة">Khenchela / خنشلة</option>
+  <option value="Souk Ahras / سوق أهراس">Souk Ahras / سوق أهراس</option>
+  <option value="Tipaza / تيبازة">Tipaza / تيبازة</option>
+  <option value="Mila / ميلة">Mila / ميلة</option>
+  <option value="Ain Defla / عين الدفلى">Ain Defla / عين الدفلى</option>
+  <option value="Naama / النعامة">Naama / النعامة</option>
+  <option value="Ain Temouchent / عين تموشنت">Ain Temouchent / عين تموشنت</option>
+  <option value="Ghardaia / غرداية">Ghardaia / غرداية</option>
+  <option value="Relizane / غليزان">Relizane / غليزان</option>
+  <option value="Timimoun / تيميمون">Timimoun / تيميمون</option>
+  <option value="Bordj Badji Mokhtar / برج باجي مختار">Bordj Badji Mokhtar / برج باجي مختار</option>
+  <option value="Ouled Djellal / أولاد جلال">Ouled Djellal / أولاد جلال</option>
+  <option value="Beni Abbes / بني عباس">Beni Abbes / بني عباس</option>
+  <option value="Ain Salah / عين صالح">Ain Salah / عين صالح</option>
+  <option value="Ain Guezzam / عين قزام">Ain Guezzam / عين قزام</option>
+  <option value="Touggourt / تقرت">Touggourt / تقرت</option>
+  <option value="Djanet / جانت">Djanet / جانت</option>
+  <option value="El Mghair / المغير">El Mghair / المغير</option>
+  <option value="El Menia / المنيعة">El Menia / المنيعة</option>
+</select>
+
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="commune">Commune</label>
+                        <input type="text" name="commune" id="commune" class="form-control" placeholder="Entrez la commune" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="place_verification">Lieu d'inspection de l'article</label>
+                        <input type="text" id="place_verification" name="place_verification" class="form-control" placeholder="Entrez l'adresse d'inspection" required>
+                        <small class="text-muted">Vous pouvez écrire ce que vous voulez librement</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="place_vendre">Lieu de vente de l'article</label>
+                        <input type="text" id="place_vendre" name="place_vendre" class="form-control" placeholder="Entrez l'adresse de vente" required>
+                        <small class="text-muted">Vous pouvez écrire ce que vous voulez librement</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3: Dates et disponibilité -->
+            <div class="form-section">
+                <h2 class="section-title"><i class="far fa-calendar-alt"></i> Dates et validité</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="date_debut" class="required">Date de l'enchère</label>
+                        <input type="date" name="date_debut" id="date_debut" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date_fin" class="required">Date d'expiration</label>
+                        <input type="date" name="date_fin" id="date_fin" class="form-control" required>
+                        
+                        <div class="availability-status">
+                            <div class="status-indicator">
+                                <span class="status-dot available"></span>
+                                <span>Disponible</span>
+                            </div>
+                            <div class="status-indicator">
+                                <span class="status-dot not-available"></span>
+                                <span>Non disponible</span>
+                            </div>
+                        </div>
+                        <small class="text-muted">Le statut de disponibilité sera mis à jour automatiquement en fonction de la date</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2 class="section-title"><i class="far fa-images"></i> Photos et vidéos</h2>
+                
+                <div class="form-group">
+                    <label class="required">Téléchargement des médias</label>
+                    <div class="image-upload" id="mediaUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Glissez-déposez des images ici ou cliquez pour sélectionner</p>
+                        <small>Vous pouvez télécharger jusqu'à 10 images (JPEG, PNG) + une vidéo (MP4)</small>
+                    </div>
+                    <div id="mediaValidation" class="validation-error">
+                        <i class="fas fa-exclamation-circle"></i> Vous devez télécharger au moins un média
+                    </div>
+                    <div class="media-counter">
+                        <span id="mediaCount">0</span> fichiers téléchargés
+                    </div>
+                    
+                    <small class="text-muted">Le logo du site sera automatiquement ajouté aux médias téléchargés</small>
+                </div>
+                
+                <div class="uploaded-images" id="uploadedMediaList"></div>
+            </div>
+            
+            <!-- Section 5: Contact -->
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-phone-alt"></i> Informations de contact</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="contact-phone" class="required">Numéro de téléphone</label>
+                       <input type="tel" id="contact-phone" name="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Méthodes de contact supplémentaires</label>
+                        <div style="display: flex; gap: 15px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" name="whatsapp" checked="true" value="true"> WhatsApp
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" name="viber" value="true"> Viber
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" name="telegram" value="true"> Telegram
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boutons de soumission -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Publier l'annonce</button>
+            </div>
+        </form>
+    </div>
+
+  
+            
+    <div class="upload-dialog" id="uploadDialog">
+        <div class="dialog-content">
+            <div id="dialogIcon"></div>
+            <h3 id="dialogTitle">Téléchargement des fichiers</h3>
+            <p id="dialogMessage">Veuillez patienter pendant le téléchargement de vos fichiers...</p>
+            
+            <div class="progress-container" id="progress_container"> 
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="dialog-buttons" id="dialogButtons" style="display: none;">
+                <button class="btn btn-primary" onclick="closeDialog()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="menu.js"></script>
+
+<script>
+
+       
+        let id = null;
+
+
+        
+
+async function getID() {
+  const userStr = sessionStorage.getItem("_profile");
+  const user = JSON.parse(userStr);
+  console.log("user id = "+user.id);
+  id = user.id;
+
+   fetch('https://enchere-dz.com/api/abonnement/active/'+id)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    // User has an active subscription
+                }else{
+window.location.replace('https://enchere-dz.com/mon-abonnement?lang=fr');
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching active abonnement:", error);
+            });
+  
+  if (!userStr) {
+    console.log("User not found in sessionStorage");
+    return;
+  }
+}
+
+getID()
+
+    
+
+        var selectedMediaFiles = [];
+        let mediaCounter = 0;
+        var uploadedFiles = new Set();
+        const xhr = new XMLHttpRequest();
+        const progressBarWidget = document.getElementById("progress_container");
+
+   const announceFormes = document.getElementById("announceForm");
+        const back_btn = document.getElementById("back_btn");
+
+        back_btn.onclick = function(e) {
+            window.history.back();
+        };
+
+        // Enhanced file identifier
+        function getFileIdentifier(file) {
+            return `${file.name}-${file.size}-${file.lastModified}-${file.type}`;
+        }
+
+        // Update media counter
+        function updateMediaCounter() {
+            document.getElementById('mediaCount').textContent = selectedMediaFiles.length;
+        }
+
+        // Check session
+        if (!sessionStorage.getItem("_key")) {
+            window.location.href = 'https://enchere-dz.com/login?lang=fr';
+        }
+
+        // Create media element
+        function createMediaElement(id, file, dataUrl) {
+            const mediaItem = document.createElement('div');
+            mediaItem.className = 'image-preview';
+            mediaItem.setAttribute('data-id', id);
+            
+            if (file.type.match('image.*')) {
+                mediaItem.innerHTML = `
+                    <img src="${dataUrl}" alt="Preview" loading="lazy">
+                    <div class="remove-image">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="file-info">${file.name}</div>
+                `;
+            } else {
+                mediaItem.innerHTML = `
+                    <video controls preload="metadata">
+                        <source src="${dataUrl}" type="${file.type}">
+                    </video>
+                    <div class="remove-image">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="file-info">${file.name}</div>
+                `;
+            }
+            
+            mediaItem.querySelector('.remove-image').addEventListener('click', () => {
+                removeMediaItem(id);
+            });
+            
+            return mediaItem;
+        }
+
+        // Process single file
+        async function processSingleFile(file, mediaList) {
+            return new Promise((resolve) => {
+                const id = mediaCounter++;
+                selectedMediaFiles.push({ id, file });
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const mediaItem = createMediaElement(id, file, e.target.result);
+                    mediaList.appendChild(mediaItem);
+                    void mediaItem.offsetHeight; // Force reflow
+                    resolve();
+                };
+                reader.onerror = () => resolve();
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Remove media item
+        function removeMediaItem(id) {
+            const index = selectedMediaFiles.findIndex(item => item.id === id);
+            if (index === -1) return;
+            
+            const element = document.querySelector(`.image-preview[data-id="${id}"]`);
+            if (element) {
+                element.classList.add('removing');
+                setTimeout(() => element.remove(), 300);
+            }
+            
+            const fileId = getFileIdentifier(selectedMediaFiles[index].file);
+            uploadedFiles.delete(fileId);
+            selectedMediaFiles.splice(index, 1);
+            updateMediaCounter();
+        }
+
+        // Media upload handling
+        document.getElementById('mediaUploadArea').addEventListener('click', function() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.multiple = true;
+            fileInput.accept = 'image/*,video/*';
+            
+            fileInput.onchange = async (e) => {
+                const files = Array.from(e.target.files);
+                const mediaList = document.getElementById('uploadedMediaList');
+                
+                document.getElementById('mediaValidation').style.display = 'none';
+                
+                for (const file of files) {
+                    if (!file.type.match('image.*') && !file.type.match('video.*')) {
+                        showErrorDialog('Type de fichier non supporté', 'Le fichier ' + file.name + ' n\'est pas une image ou une vidéo');
+                        continue;
+                    }
+                    
+                    const fileId = getFileIdentifier(file);
+                    if (uploadedFiles.has(fileId)) {
+                        continue;
+                    }
+                    
+                    try {
+                        await processSingleFile(file, mediaList);
+                        uploadedFiles.add(fileId);
+                    } catch (error) {
+                        console.error('Failed to process file:', file.name, error);
+                    }
+                }
+                
+                updateMediaCounter();
+            };
+            
+            fileInput.click();
+        });
+
+        // Form submission
+        document.getElementById('announceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (selectedMediaFiles.length === 0) {
+                document.getElementById('mediaValidation').style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData(announceFormes);
+            showUploadDialog();
+            
+            selectedMediaFiles.forEach(item => {
+                formData.append('medias', item.file);
+            });
+
+            xhr.open('POST', 'https://enchere-dz.com/api/annonces/create', true);
+            
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    progressBarWidget.style.visibility = "visible";
+                    const percentComplete = Math.round((e.loaded * 100) / e.total);
+                    updateProgress(percentComplete);
+                }
+            };
+            
+            xhr.onload = function() {
+                if (xhr.status === 200 || xhr.status == 201) {
+                    selectedMediaFiles = [];
+                    uploadedFiles = new Set();
+                    showSuccessDialog('Annonce créée avec succès', 'Votre annonce a été publiée avec succès et est en cours de modération');
+                } else {
+                    showErrorDialog('Erreur lors de la création de l\'annonce', 'Une erreur s\'est produite lors du traitement de votre demande');
+                }
+            };
+            
+            xhr.onerror = function() {
+                progressBarWidget.style.visibility = "hidden";
+                showErrorDialog('Échec de la connexion au serveur', 'Impossible de se connecter au serveur, veuillez réessayer plus tard');
+            };
+            formData.append("user_id",id);
+            xhr.send(formData);
+        });
+
+        // Dialog functions
+        function showUploadDialog() {
+            const dialog = document.getElementById('uploadDialog');
+            const dialogIcon = document.getElementById('dialogIcon');
+            const dialogTitle = document.getElementById('dialogTitle');
+            const dialogMessage = document.getElementById('dialogMessage');
+            const dialogButtons = document.getElementById('dialogButtons');
+            const progressBar = document.getElementById('progressBar');
+            
+            dialogIcon.innerHTML = '<i class="fas fa-spinner fa-spin" style="font-size: 50px; color: var(--primary-color);"></i>';
+            dialogTitle.textContent = 'Téléchargement des fichiers';
+            dialogMessage.textContent = 'Veuillez patienter pendant le téléchargement de vos fichiers...';
+            dialogButtons.style.display = 'none';
+            progressBar.style.width = '0%';
+            progressBar.style.backgroundColor = 'var(--primary-color)';
+            
+            dialog.style.display = 'flex';
+        }
+
+        function updateProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percent + '%';
+            if (percent === 100) {
+                progressBar.style.backgroundColor = 'var(--success-color)';
+            }
+        }
+
+        function showSuccessDialog(title, message) {
+            const dialogIcon = document.getElementById('dialogIcon');
+            const dialogTitle = document.getElementById('dialogTitle');
+            const dialogMessage = document.getElementById('dialogMessage');
+            const dialogButtons = document.getElementById('dialogButtons');
+            
+            dialogIcon.innerHTML = '<i class="fas fa-check-circle success-icon"></i>';
+            dialogTitle.textContent = title;
+            dialogMessage.textContent = message;
+            dialogButtons.style.display = 'block';
+            
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressBar').style.backgroundColor = 'var(--success-color)';
+            dialogButtons.onclick = function(e) {
+                window.location.href = "https://enchere-dz.com?lang=fr";
+            };
+        }
+
+        function showErrorDialog(title, message) {
+            const dialogIcon = document.getElementById('dialogIcon');
+            const dialogTitle = document.getElementById('dialogTitle');
+            const dialogMessage = document.getElementById('dialogMessage');
+            const dialogButtons = document.getElementById('dialogButtons');
+            
+            dialogIcon.innerHTML = '<i class="fas fa-times-circle error-icon"></i>';
+            dialogTitle.textContent = title;
+            dialogMessage.textContent = message;
+            dialogButtons.style.display = 'block';
+            document.getElementById('progressBar').style.backgroundColor = 'var(--danger-color)';
+        }
+
+        function closeDialog() {
+            document.getElementById('uploadDialog').style.display = 'none';
+        }
+
+        // Initialize date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date_debut').min = today;
+        document.getElementById('date_fin').min = today;
+
+        // Initialize media counter
+        updateMediaCounter();
+
+        
+    </script>
+</body>
+</html>

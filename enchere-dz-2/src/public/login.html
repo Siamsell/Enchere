@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - إعلانات دزاير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        /* New navbar styles */
+        :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #2c3e2c;
+            --light-color: #f5f7f5;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.social-links a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+.contact-info {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.contact-info i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: transparent;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logos-text .main {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logos-text .sub {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+        }
+        
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .add-announce {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(56, 84, 56, 0.3);
+        }
+        
+        .add-announce:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .user-profile {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Side menu styles */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease-out;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .side-menu.open {
+            right: 0;
+        }
+        
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .close-menu {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .close-menu:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+        
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .menu-item:hover {
+            background-color: #f5f7f5;
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .menu-item.active i {
+            color: var(--white);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Original styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+        
+        .auth-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .auth-form h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: rgba(252,170,0,255);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: rgba(252,170,0,255);
+        }
+        
+      
+                .logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logos{
+
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            background-color: #f8a51b;
+            width: 80%;
+        }
+
+        .logos-text{
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: 20px;
+        }
+
+                .logos img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+         .language-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .language-btn {
+            flex: 1;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+     
+    /* Style moderne pour le formulaire */
+    .auth-form {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        margin: 2rem auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .auth-form:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .auth-form h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .auth-form h1:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--accent-color);
+        border-radius: 3px;
+    }
+
+    .form-group {
+        margin-bottom: 1.8rem;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        font-size: 0.95rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.85rem 1.2rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f9f9f9;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(56, 84, 56, 0.1);
+        outline: none;
+    }
+
+    /* Style moderne pour la checkbox */
+    .terms-container {
+        margin: 1.5rem 0 2rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .checkbox-wrapper {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    #termsCheckbox {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 3px;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    #termsCheckbox:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    #termsCheckbox:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 14px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .checkbox-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        line-height: 1.5;
+    }
+
+    .checkbox-label a {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .checkbox-label a:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+
+    /* Bouton de soumission */
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(56, 84, 56, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(56, 84, 56, 0.3);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .submit-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .submit-btn:hover::after {
+        left: 100%;
+    }
+    .menu-item a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 15px;
+        margin: -12px -15px; /* Compense le padding du parent */
+    }
+    /* Lien d'inscription */
+    .auth-footer {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .auth-footer p {
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-footer a {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .auth-footer a:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+
+    /* Animation pour les champs */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+        animation: fadeIn 0.4s ease forwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .terms-container { animation: fadeIn 0.4s ease 0.3s forwards; }
+    .submit-btn { animation: fadeIn 0.4s ease 0.4s forwards; }
+    .auth-footer { animation: fadeIn 0.4s ease 0.5s forwards; }
+</style>
+  
+</head>
+<body>
+    <!-- New Header -->
+    <header class="navbar">
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        
+         <div class="logos" style="background-color: white;">
+<img src="logo.png" alt="encheres_dz Logo">
+            <div class="logos-text">
+                <span class="main">encheres_dz</span>
+                <span class="sub">المزادات والإعلانات الجزائرية</span>
+            </div>
+        </div>
+        
+        <div class="user-actions">
+                           <a href="https://enchere-dz.com/signup" class="auth-btn login-btn">إنشاء حساب</a>
+
+        </div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+
+
+        <div class="side-menu-header">
+            <h3>القائمة الرئيسية</h3>
+            <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+        </div>
+
+              <div class="menu-section">
+            <div class="menu-section-title">اللغة</div>
+            <div class="language-selector">
+ <button class="language-btn active" id="arabicBtn">
+<i class="fas fa-language"></i> العربية
+</button>
+<button class="language-btn" id="frenchBtn">
+<i class="fas fa-language"></i> Français
+</button>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">تصفح</div>
+            <div class="menu-item" id="home_btn">
+                <i class="fas fa-home"></i> الصفحة الرئيسية
+            </div>
+             <div class="menu-item" id="searchMenuItem"><i class="fas fa-search"></i> البحث</div>
+           <div class="menu-item" id="add_pub_menu">
+                <i class="fas fa-plus-circle" ></i> إضافة إعلان
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">حسابك</div>
+            <div class="menu-item active" id="loginMenuItem">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </div>
+            <div class="menu-item" id="registerMenuItem">
+                <i class="fas fa-user-plus"></i> إنشاء حساب
+            </div>
+            <div class="menu-item" id="my_account" style="display: none;">
+                <i class="fas fa-user"></i> حسابي
+            </div>
+            <div class="menu-item" id="logoutMenuItem" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </div>
+        </div>
+        
+         <div class="menu-section">
+        <div class="menu-section-title">المساعدة</div>
+        <div class="menu-item">
+            <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi" >الشروط والأحكام</a>
+        </div>
+        </div>
+        
+    <div class="social-links">
+            <a   href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+            <a   href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+            <a   href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+         <div class="contact-info">
+        <p><i class="fas fa-envelope"></i>  ENCHERES-DZ@HOTMAIL.COM</p>
+        <p><i class="fas fa-phone"></i>  0550875781</p>
+    </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="container auth-container">
+        <form class="auth-form" id="forms">
+            <h1>تسجيل الدخول</h1>
+            
+            <div class="form-group">
+                <label for="login-email">البريد الإلكتروني</label>
+                <input type="email" name="email" id="login-email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">كلمة المرور</label>
+                <input type="password" name="password" id="login-password" class="form-control" required>
+            </div>
+              <div>
+                <input type="checkbox" id="termsCheckbox" required>
+                <label for="termsCheckbox"><a href="https://enchere-dz.com/loi">أوافق على شروط الاستخدام</a></label>
+            </div>
+            <button type="submit" class="submit-btn">تسجيل الدخول</button>
+            
+            
+            <div class="auth-footer">
+                <p>ليس لديك حساب؟ <a href="https://enchere-dz.com/signup">إنشاء حساب جديد</a></p>
+            </div>
+        </form>
+    </main>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const arabicBtn = document.getElementById('arabicBtn');
+    const frenchBtn = document.getElementById('frenchBtn');
+    
+   
+});
+const arabicBtn = document.getElementById('arabicBtn');
+const frenchBtn = document.getElementById('frenchBtn');
+
+arabicBtn.addEventListener('click', () => {
+   
+});
+
+frenchBtn.addEventListener('click', () => {
+    // Rediriger vers la version française
+    window.location.href = "https://enchere-dz.com/login?lang=fr";
+});
+          // Menu functionality
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeMenuBtn = document.querySelector('#closeMenuBtn');
+        const sideMenu = document.querySelector('#sideMenu');
+        const overlay = document.querySelector('#overlay');
+        const addAnnounceBtn = document.querySelector('.add-announce');
+        const userProfileBtn = document.querySelector('.user-profile');
+        const loginMenuItem = document.querySelector('#loginMenuItem');
+        const registerMenuItem = document.querySelector('#registerMenuItem');
+        const logoutMenuItem = document.querySelector('#logoutMenuItem');
+        const homeMenuItem = document.querySelector('#home_btn');
+        const addAnnounceBtnMenu = document.querySelector('#add_pub_menu');
+        const searchMenuItem = document.getElementById('searchMenuItem');
+
+
+        if (sessionStorage.getItem("_key")) {
+  window.location.href = 'https://enchere-dz.com';
+}
+
+
+        // Check if user is logged in
+        if (sessionStorage.getItem("_key")) {
+            loginMenuItem.style.display = 'none';
+            registerMenuItem.style.display = 'none';
+            logoutMenuItem.style.display = '';
+        }
+
+        // Toggle menu
+        menuBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+            overlay.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        searchMenuItem.addEventListener('click', () => {
+           closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/recherche";
+            }, 300)
+        });
+
+        overlay.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+         addAnnounceBtnMenu.addEventListener('click', () => {
+             closeMenu();
+              setTimeout(() => {
+                             addAnnonce();
+
+            }, 300)
+        });
+
+    function addAnnonce(){
+        const isLoggedIn = !!sessionStorage.getItem("_key");
+
+        if (isLoggedIn) {
+            window.location.href = "https://enchere-dz.com/ajouter_annonce";
+        } else {
+            alert("يجب عليك تسجيل الدخول  أولاً لتتمكن من إضافة إعلان.");
+        }
+    }
+
+        function closeMenu() {
+             sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Menu item actions
+        loginMenuItem.addEventListener('click', () => {
+            closeMenu()
+        });
+
+        registerMenuItem.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+             setTimeout(() => {
+                                    window.location.href = "https://enchere-dz.com/signup";
+
+                    }, 300)
+        });
+
+         homeMenuItem.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+             setTimeout(() => {  
+                          window.location.href = "https://enchere-dz.com";
+
+                    }, 300)
+        });
+
+        logoutMenuItem.addEventListener('click', () => {
+            sessionStorage.removeItem("_key");
+            window.location.reload();
+        });
+
+      
+       
+
+        // Login form submission
+        const forms = document.getElementById("forms");
+        forms.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('https://enchere-dz.com/api/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization':'78heoytx56drg4ezd163dfjjs3',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    alert('تم تسجيل الدخول بنجاح!');
+                    const json = await response.json();
+                    sessionStorage.setItem("_key",json.token);
+                    sessionStorage.setItem("_profile", JSON.stringify(json.user));
+                    window.location.href = 'https://enchere-dz.com';
+                } else {
+                    alert('فشل تسجيل الدخول. يرجى التحقق من البيانات.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('حدث خطأ أثناء الاتصال بالخادم.');
+            }
+            
+        });
+      
+          
+    </script>
+</body>
+</html>

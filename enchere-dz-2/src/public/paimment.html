@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طرق الدفع - إعلانات دزاير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <style>
+        /* New navbar styles */
+        :root {
+            --primary-color: #385438;
+            --secondary-color: #4a6f4a;
+            --accent-color: #f8a51b;
+            --dark-color: #2c3e2c;
+            --light-color: #f5f7f5;
+            --text-color: #333;
+            --text-light: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: transparent;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logos-text .main {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logos-text .sub {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            padding: 5px;
+        }
+        
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .add-announce {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(56, 84, 56, 0.3);
+        }
+        
+        .add-announce:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .user-profile {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .user-profile:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Side menu styles */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease-out;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .side-menu.open {
+            right: 0;
+        }
+        
+        .side-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .side-menu-header h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .close-menu {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .close-menu:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+        
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .menu-item:hover {
+            background-color: #f5f7f5;
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .menu-item.active i {
+            color: var(--white);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Modern payment container */
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 2rem 0;
+        }
+        
+        .payment-form {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-form h1 {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .payment-form h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        /* Modern payment options */
+        .payment-option {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            background: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .payment-option:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 0;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .payment-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        .payment-option:hover:before {
+            height: 100%;
+        }
+        
+        .payment-option.active {
+            border-color: var(--primary-color);
+            background-color: var(--light-color);
+        }
+        
+        .payment-option.active:before {
+            height: 100%;
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        
+        .payment-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--light-color), white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+        }
+        
+        .payment-details {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .payment-option.active .payment-details {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .payment-details p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .payment-details .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Modern subscription plans */
+        .subscription-plans {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .plan {
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-color);
+            transition: var(--transition);
+            opacity: 0;
+        }
+        
+        .plan:hover, .plan.active {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        .plan:hover:before, .plan.active:before {
+            opacity: 1;
+        }
+        
+        .plan.active {
+            border: 2px solid var(--primary-color);
+            background-color: var(--light-color);
+        }
+        
+        .plan-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .plan-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .plan-price:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        
+        .plan:hover .plan-price:after, .plan.active .plan-price:after {
+            transform: scaleX(1);
+        }
+        
+        .plan-duration {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-bonus {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 0.5rem;
+            background: rgba(248, 165, 27, 0.1);
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        /* Modern submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56, 84, 56, 0.3);
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(56, 84, 56, 0.4);
+        }
+        
+        .submit-btn:hover:after {
+            left: 100%;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .payment-option {
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+        }
+        
+        .payment-option:nth-child(1) { animation-delay: 0.1s; }
+        .payment-option:nth-child(2) { animation-delay: 0.2s; }
+        .payment-option:nth-child(3) { animation-delay: 0.3s; }
+        
+        .subscription-plans { 
+            animation: fadeIn 0.4s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        .submit-btn { 
+            animation: fadeIn 0.4s ease 0.5s forwards;
+            opacity: 0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .logos-text .sub {
+                display: none;
+            }
+            
+            .logos img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .payment-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .subscription-plans {
+                flex-direction: column;
+            }
+             .bank-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .plan {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Loading animation for form submission */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logos {
+            display: flex;
+            flex-direction: row;
+            align-items: end;
+            background-color: white;
+            width: 80%;
+        }
+
+        .logos-text {
+            display: flex;
+            flex-direction: column;
+            margin-inline-start: 20px;
+        }
+
+        .logos img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .language-btn {
+            flex: 1;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+                .bank-info {
+            background-color: #f0f7f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .bank-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bank-info h4 i {
+            color: var(--accent-color);
+        }
+        
+        .bank-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .bank-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bank-detail strong {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .bank-detail span {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .rib-code {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            border: 1px dashed var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .rib-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #fff8e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .menu-item a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 15px;
+            margin: -12px -15px; /* Compense le padding du parent */
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- New Header -->
+    <!-- Header -->
+    <header class="navbar">
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        
+        <div class="logos" style="background-color: white;">
+            <img src="logo.png" alt="encheres_dz Logo">
+            <div class="logos-text">
+                <span class="main">encheres_dz</span>
+                <span class="sub">المزادات والإعلانات الجزائرية</span>
+            </div>
+        </div>
+        
+        <div class="user-actions"></div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>القائمة الرئيسية</h3>
+            <span class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">اللغة</div>
+            <div class="language-selector">
+                <button class="language-btn active" id="arabicBtn">
+                    <i class="fas fa-language"></i> العربية
+                </button>
+                <button class="language-btn" id="frenchBtn">
+                    <i class="fas fa-language"></i> Français
+                </button>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">تصفح</div>
+            <div class="menu-item" id="home_btn">
+                <i class="fas fa-home"></i> الصفحة الرئيسية
+            </div>
+            <div class="menu-item" id="searchMenuItem"><i class="fas fa-search"></i> البحث</div>
+            <div class="menu-item" id="add_pub_menu">
+                <i class="fas fa-plus-circle"></i> إضافة إعلان
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">حسابك</div>
+            <div class="menu-item" id="loginMenuItem">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </div>
+            <div class="menu-item" id="registerMenuItem">
+                <i class="fas fa-user-plus"></i> إنشاء حساب
+            </div>
+            <div class="menu-item" id="my_account">
+                <i class="fas fa-user"></i> حسابي
+            </div>
+            <div class="menu-item" id="subscriptionMenuItem">
+                <i class="fas fa-crown"></i> اشتراكاتي
+            </div>
+            <div class="menu-item" id="logoutMenuItem">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <div class="menu-section-title">المساعدة</div>
+            <div class="menu-item">
+                <i class="fas fa-file-alt"></i><a href="https://enchere-dz.com/loi">الشروط والأحكام</a>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=100066521474042"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/encheres_dz/#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> ENCHERES-DZ@HOTMAIL.COM</p>
+            <p><i class="fas fa-phone"></i> 0550875781</p>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modern payment content -->
+    <main class="container payment-container">
+        <div class="payment-form">
+            <h1>طرق الدفع والاشتراك</h1>
+            
+            <div class="payment-option" style="display: none;">
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="payment-title">الدفع الذهبي</h3>
+                </div>
+                <div class="payment-details">
+                    <p>الدفع عبر البطاقة الذهبية أو التحويل البنكي</p>
+                    <p class="highlight">سيتم تفعيل اشتراكك خلال 24 ساعة بعد التحقق من الدفع</p>
+                </div>
+            </div>
+            
+            <div class="payment-option">
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="payment-title">الدفع عبر CCP</h3>
+                </div>
+              <div class="payment-details">
+                    <p>يمكنك إجراء تحويل بنكي مباشر إلى حسابنا في البريد الجزائري (CPP)</p>
+                    <p class="highlight">سيتم تفعيل اشتراكك خلال 24 ساعة بعد التحقق من الدفع</p>
+                    
+                    <div class="bank-info">
+                        <h4><i class="fas fa-info-circle"></i> معلومات الحساب البنكي (CPP)</h4>
+                        <div class="bank-details">
+                            <div class="bank-detail">
+                                <strong>العنوان</strong>
+                                <span>التجزئة المختلطة الثانية شارع رقم 07 البرواقية</span>
+                            </div>
+                            <div class="bank-detail">
+                                <strong>اسم صاحب الحساب</strong>
+                                <span>بلحاج ابراهيم عبد الرحمان</span>
+                            </div>
+                            
+                            <div class="bank-detail">
+                                <strong>رقم الحساب</strong>
+                                <span>17483921</span>
+                            </div>
+                            <div class="bank-detail">
+                                <strong>مفتاح RIB</strong>
+                                <span>70</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rib-code">
+                            007999991748392170
+                        </div>
+                        
+                        <div class="rib-info">
+                            <p><i class="fas fa-exclamation-circle"></i> الرجاء استخدام الرمز البريدي الكامل (RIB) أعلاه عند إجراء التحويل</p>
+                        </div>
+                    </div>
+        </div>
+            </div>
+
+            
+
+<div class="payment-option">
+    <div class="payment-header">
+        <div class="payment-icon">
+            <i class="fas fa-university"></i>
+        </div>
+        <h3 class="payment-title">التحويل البنكي</h3>
+    </div>
+
+    <div class="payment-details">
+        <p>يمكنك إجراء تحويل بنكي من حسابك الجاري باستخدام بطاقة CIB نحو حسابنا البنكي.</p>
+        <p class="highlight">سيتم تفعيل اشتراكك خلال 24 ساعة بعد التحقق من الدفع.</p>
+
+        <div class="bank-info">
+            <h4><i class="fas fa-info-circle"></i> معلومات الحساب البنكي</h4>
+            <div class="bank-details">
+                <div class="bank-detail">
+                    <strong>اسم المستفيد</strong>
+                    <span>EURL BAB AUTO S </span>
+                </div>
+                <div class="bank-detail">
+                    <strong>اسم البنك</strong>
+                    <span>البنك الوطني الجزائري (BNA)</span>
+                </div>
+                <div class="bank-detail">
+                    <strong>رقم الحساب (RIB)</strong>
+                    <span>853000130630027</span>
+                </div>
+                <div class="bank-detail">
+                    <strong>العنوان</strong>
+                    <span>حي محمدي التجزئة المختلطة الثانية رقم 07 البرواقية</span>
+                </div>
+            </div>
+
+            <div class="rib-code">
+                853000130630027
+            </div>
+
+            <div class="rib-info">
+                <p><i class="fas fa-exclamation-circle"></i> الرجاء إدخال رقم الحساب (RIB) الكامل بدقة عند إجراء التحويل من بنكك.</p>
+                <p><i class="fas fa-receipt"></i> احتفظ بإيصال التحويل البنكي لإرساله لنا في حال طلب إثبات.</p>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            <div class="payment-option">
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="payment-title">الدفع النقدي</h3>
+                </div>
+                <div class="payment-details">
+                    <p>يمكنك الدفع نقداً في مكتبنا أو نرسل مندوبنا إليك</p>
+                    <p class="highlight">هذا الخيار متاح فقط في الولايات القريبة منا. سنحدد لك الولايات المؤهلة بعد اختيار هذه الطريقة</p>
+                    <p>يرجى الاتصال بنا لتحديد التفاصيل: <span class="highlight">0550875781</span></p>
+                </div>
+            </div>
+            
+            <h3 style="text-align: center; margin: 3rem 0 1.5rem; color: var(--primary-color); font-weight: 700;">اختر مدة الاشتراك</h3>
+            
+            <div class="subscription-plans">
+                <div class="plan">
+                    <div class="plan-title">شهري</div>
+                    <div class="plan-price">5,000 د.ج</div>
+                    <div class="plan-duration">لمدة شهر واحد</div>
+                    <div class="plan-bonus">النشر حسب الرغبة</div>
+                </div>
+                
+                <div class="plan active">
+                    <div class="plan-title">6 أشهر</div>
+                    <div class="plan-price">25,000 د.ج</div>
+                    <div class="plan-duration">لمدة 6 أشهر</div>
+                    <div class="plan-bonus">+ شهر مجاني</div>
+                </div>
+                
+                <div class="plan">
+                    <div class="plan-title">سنوي</div>
+                    <div class="plan-price">45,000 د.ج</div>
+                    <div class="plan-duration">لمدة 12 شهراً</div>
+                    <div class="plan-bonus">+ 3 أشهر مجانية</div>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="btnText">تأكيد الدفع والمتابعة</span>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Menu functionality
+        const menuBtn = document.querySelector('.menu-btn');
+        const closeMenuBtn = document.querySelector('#closeMenuBtn');
+        const sideMenu = document.querySelector('#sideMenu');
+        const overlay = document.querySelector('#overlay');
+        const addAnnounceBtn = document.querySelector('.add-announce');
+        const userProfileBtn = document.querySelector('.user-profile');
+        const loginMenuItem = document.querySelector('#loginMenuItem');
+        const registerMenuItem = document.querySelector('#registerMenuItem');
+        const logoutMenuItem = document.querySelector('#logoutMenuItem');
+        const homeMenuItem = document.querySelector('#home_btn');
+        const addAnnounceBtnMenu = document.querySelector('#add_pub_menu');
+        const searchMenuItem = document.getElementById('searchMenuItem');
+        const arabicBtn = document.getElementById('arabicBtn');
+        const frenchBtn = document.getElementById('frenchBtn');
+        const myAccount = document.getElementById('my_account');
+        const subscriptionMenuItem = document.getElementById('subscriptionMenuItem');
+
+        subscriptionMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/mon-abonnement";
+            }, 300);
+        });
+
+       
+
+
+       myAccount.addEventListener('click', () => {
+            closeMenu()
+            setTimeout(() => {
+                const user = sessionStorage.getItem("_profile")
+                const id = JSON.parse(user).id;
+                window.location.href = "https://enchere-dz.com/profile/"+id+"";
+            }, 300); 
+        });
+
+        // Check if user is logged in
+        if (sessionStorage.getItem("_key")) {
+            loginMenuItem.style.display = 'none';
+            registerMenuItem.style.display = 'none';
+            logoutMenuItem.style.display = '';
+        }
+        if (!sessionStorage.getItem("_key")) {
+            window.location.href = "/login";
+        }
+
+        let id = null;
+
+        async function getID() {
+  const userStr = sessionStorage.getItem("_profile");
+  const user = JSON.parse(userStr);
+  console.log("user id = "+user.id);
+  id = user.id;
+  
+  if (!userStr) {
+    console.log("User not found in sessionStorage");
+    return;
+  }
+}
+
+getID();
+
+        // Toggle menu
+        menuBtn.addEventListener('click', () => {
+            sideMenu.classList.add('open');
+            overlay.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        searchMenuItem.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/recherche";
+            }, 300);
+        });
+
+        overlay.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        addAnnounceBtnMenu.addEventListener('click', () => {
+            closeMenu();
+            setTimeout(() => {
+                addAnnonce();
+            }, 300);
+        });
+
+        function addAnnonce() {
+            const isLoggedIn = !!sessionStorage.getItem("_key");
+
+            if (isLoggedIn) {
+                window.location.href = "https://enchere-dz.com/ajouter-annonce";
+            } else {
+                alert("يجب عليك تسجيل الدخول أولاً لتتمكن من إضافة إعلان.");
+            }
+        }
+
+        function closeMenu() {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Menu item actions
+        loginMenuItem.addEventListener('click', () => {
+            closeMenu();
+        });
+
+        registerMenuItem.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                window.location.href = "https://enchere-dz.com/signup";
+            }, 300);
+        });
+
+        homeMenuItem.addEventListener('click', () => {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('active');
+            setTimeout(() => {  
+                window.location.href = "https://enchere-dz.com";
+            }, 300);
+        });
+
+        logoutMenuItem.addEventListener('click', () => {
+            sessionStorage.removeItem("_key");
+            window.location.reload();
+        });
+
+        // Language switcher
+        arabicBtn.addEventListener('click', () => {
+           // window.location.href = "https://enchere-dz.com/payment";
+        });
+
+        frenchBtn.addEventListener('click', () => {
+            window.location.href = "https://enchere-dz.com/payment?lang=fr";
+        });
+
+        // Enhanced payment option selection
+        document.querySelectorAll('.payment-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const option = this.parentElement;
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                option.classList.add('active');
+                
+                // Add visual feedback
+                option.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    option.style.transform = '';
+                }, 200);
+            });
+        });
+        
+        // Enhanced plan selection
+        document.querySelectorAll('.plan').forEach(plan => {
+            plan.addEventListener('click', function() {
+                document.querySelectorAll('.plan').forEach(p => {
+                    p.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+        
+        // Modern form submission with loading state
+        document.getElementById('submitBtn').addEventListener('click', async function(e) {
+            e.preventDefault();
+            const selectedOption = document.querySelector('.payment-option.active');
+            const selectedPlan = document.querySelector('.plan.active');
+            const btn = this;
+            const btnText = document.getElementById('btnText');
+            
+            if (!selectedOption) {
+                showError('يرجى اختيار طريقة الدفع');
+                return;
+            }
+            
+            if (!selectedPlan) {
+                showError('يرجى اختيار مدة الاشتراك');
+                return;
+            }
+            
+            // Determine payment type
+            const paymentTitle = selectedOption.querySelector('.payment-title').textContent;
+            let paymentType;
+            
+            if (paymentTitle.includes('الدفع الذهبي') || paymentTitle.includes('الدفع عبر CCP')) {
+                paymentType = "virement ccp";
+            }else if (paymentTitle.includes('التحويل البنكي')) {
+              paymentType = "virement bancaire"  
+
+            } else if (paymentTitle.includes('الدفع النقدي')) {
+                paymentType = "cache";
+            } else {
+                showError('طريقة الدفع غير معروفة');
+                return;
+            }
+            
+            // Determine month count
+            const planTitle = selectedPlan.querySelector('.plan-title').textContent;
+            let monthCount;
+            
+            if (planTitle.includes('شهري')) {
+                monthCount = 1;
+            } else if (planTitle.includes('6 أشهر')) {
+                monthCount = 6;
+            } else if (planTitle.includes('سنوي')) {
+                monthCount = 12;
+            } else {
+                showError('مدة الاشتراك غير معروفة');
+                return;
+            }
+            
+            // Show loading state
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span> جاري المعالجة...';
+            console.log('جاري معالجة الدفع، يرجى الانتظار...');
+
+        
+            try {
+                const response = await fetch('https://enchere-dz.com/api/abonnement', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        duree: monthCount,
+                        payment_type: paymentType,
+                        user_id:id,
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                btnText.textContent = 'تم الدفع بنجاح!';
+                btn.style.background = 'linear-gradient(135deg, #4CAF50, #2E7D32)';
+                alert('شكراً لك! سيتم تفعيل اشتراكك بعد التحقق من الدفع');
+                window.location.href = "https://enchere-dz.com/mon-abonnement";
+            } catch (err) {
+                showError('حدث خطأ أثناء معالجة الدفع. يرجى المحاولة مرة أخرى.');
+                btn.disabled = false;
+                btnText.textContent = 'تأكيد الدفع والمتابعة';
+                btn.style.background = 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))';
+                console.error('Error:', err);
+            }
+        });
+        
+        function showError(message) {
+            const errorEl = document.createElement('div');
+            errorEl.className = 'error-message';
+            errorEl.textContent = message;
+            errorEl.style.color = '#f44336';
+            errorEl.style.textAlign = 'center';
+            errorEl.style.margin = '1rem 0';
+            errorEl.style.fontWeight = '600';
+            errorEl.style.animation = 'fadeIn 0.3s ease';
+            
+            // Remove any existing error messages
+            const existingError = document.querySelector('.error-message');
+            if (existingError) existingError.remove();
+            
+            document.querySelector('.payment-form').insertBefore(errorEl, document.querySelector('.submit-btn'));
+            
+            // Shake form for attention
+            document.querySelector('.payment-form').style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                document.querySelector('.payment-form').style.animation = '';
+            }, 500);
+        }
+        
+        // Add shake animation for errors
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

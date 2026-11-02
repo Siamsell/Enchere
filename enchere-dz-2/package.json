@@ -1,0 +1,27 @@
+{
+  "name": "enchere-dz",
+  "version": "1.0.0",
+  "description": "enchere api",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/server.js"
+  },
+  "author": "letessa dev",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.1",
+    "path": "^0.12.7",
+    "sequelize": "^6.37.7",
+    "sequelize-cursor-pagination": "^3.5.1",
+    "sharp": "^0.34.2"
+  }
+}
